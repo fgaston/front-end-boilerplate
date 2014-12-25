@@ -4,12 +4,15 @@
 Front-end Boilerplate
 =========================
 
-Built with:
+Technologies used:
 -
-- HTML5
+- HTML5 + CSS3
+- JavaScript with CoffeeScript
+
+Thirt party tools and libraries:
 - jQuery
-- CoffeeScript
 - Bootstrap Theme: "Scale" by flatfull
+- Grunt
 - Browserify (using: caching-coffeeify and hbsfy)
 - Backbone
 - Marionette
