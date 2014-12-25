@@ -3,6 +3,8 @@ module.exports = Backbone.Collection.extend
   initialize: ->
     @listenTo @, 'all', @check
   check: ->
-    console.log @length
+    ###
+    $('#header-region > nav').toggleClass('navbar-inverse');
+    ###
     if @length > 3
       @reset()

@@ -49,7 +49,10 @@ module.exports = Backbone.Collection.extend({
     return this.listenTo(this, 'all', this.check);
   },
   check: function() {
-    console.log(this.length);
+
+    /*
+    $('#header-region > nav').toggleClass('navbar-inverse');
+     */
     if (this.length > 3) {
       return this.reset();
     }
@@ -259,7 +262,7 @@ module.exports = Marionette.ItemView.extend({
 module.exports = Marionette.ItemView.extend({
   template: require('templates/navigation.hbs'),
   tagName: 'nav',
-  className: 'navbar navbar-default navbar-fixed-top'
+  className: 'navbar navbar-default navbar-inverse navbar-fixed-top'
 });
 
 
