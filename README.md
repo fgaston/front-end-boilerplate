@@ -9,7 +9,8 @@ Technologies used:
 - HTML5 + CSS3
 - JavaScript with CoffeeScript
 
-Thirt party tools and libraries:
+Third party tools and libraries used:
+-
 - jQuery
 - Bootstrap Theme: "Scale" by flatfull
 - Grunt
