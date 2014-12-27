@@ -10,6 +10,10 @@ module.exports = function(grunt) {
       grunt: {
         files: ['Gruntfile.js']
       },
+      concatcss: {
+        files: 'build/css/**/*.css',
+        tasks: 'concat:css'
+      },
       appjs: {
         files: ['dist/js/app.js'],
         options: { livereload: true }
@@ -51,6 +55,11 @@ module.exports = function(grunt) {
       }
     },
     concat: {
+      css: {
+        files: {
+          'dist/css/bundle.css': ['build/css/**/*.css']
+        }
+      },
       vendor: {
         separator: ';',
         files: {
