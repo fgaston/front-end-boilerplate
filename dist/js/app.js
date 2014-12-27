@@ -42,7 +42,7 @@ $(document).ready(function() {
 });
 
 
-},{"components/index.coffee":3,"controller.coffee":4,"handlebars/helpers/index.coffee":5,"router.coffee":7}],2:[function(require,module,exports){
+},{"components/index.coffee":4,"controller.coffee":5,"handlebars/helpers/index.coffee":6,"router.coffee":9}],2:[function(require,module,exports){
 module.exports = Backbone.Collection.extend({
   model: require('models/item.coffee'),
   initialize: function() {
@@ -60,7 +60,21 @@ module.exports = Backbone.Collection.extend({
 });
 
 
-},{"models/item.coffee":6}],3:[function(require,module,exports){
+},{"models/item.coffee":7}],3:[function(require,module,exports){
+module.exports = Backbone.Collection.extend({
+  model: require('models/tr.coffee'),
+  initialize: function() {
+    return this.listenTo(this, 'all', this.check);
+  },
+  check: function() {
+    if (this.length > 5) {
+      return this.reset();
+    }
+  }
+});
+
+
+},{"models/tr.coffee":8}],4:[function(require,module,exports){
 module.exports.setActiveLinks = function(href) {
   var fragment;
   fragment = '/' + href.split('/')[1];
@@ -69,8 +83,8 @@ module.exports.setActiveLinks = function(href) {
 };
 
 
-},{}],4:[function(require,module,exports){
-var HomeView, ListCollection, ListView, LogoutView, NavigationView, OtherView;
+},{}],5:[function(require,module,exports){
+var HomeView, ListCollection, ListView, LogoutView, NavigationView, OtherView, TableCollection, TableView;
 
 NavigationView = require('views/navigation.coffee');
 
@@ -82,7 +96,11 @@ LogoutView = require('views/logout.coffee');
 
 ListView = require('views/list/index.coffee');
 
+TableView = require('views/table/index.coffee');
+
 ListCollection = require('collections/list.coffee');
+
+TableCollection = require('collections/table.coffee');
 
 module.exports = Marionette.Controller.extend({
   initialize: function(options) {
@@ -109,11 +127,21 @@ module.exports = Marionette.Controller.extend({
     return this.App.main.show(new ListView({
       collection: new ListCollection
     }));
+  },
+  table: function() {
+    this.displayNavigation();
+    return this.App.main.show(new TableView({
+      collection: new TableCollection
+    }));
   }
 });
 
 
-},{"collections/list.coffee":2,"views/home.coffee":14,"views/list/index.coffee":16,"views/logout.coffee":18,"views/navigation.coffee":19,"views/other.coffee":20}],5:[function(require,module,exports){
+},{"collections/list.coffee":2,"collections/table.coffee":3,"views/home.coffee":19,"views/list/index.coffee":21,"views/logout.coffee":23,"views/navigation.coffee":24,"views/other.coffee":25,"views/table/index.coffee":27}],6:[function(require,module,exports){
+var Handlebars;
+
+Handlebars = require('hbsfy/runtime');
+
 Handlebars.registerHelper('grid', function(str) {
   var returnValue, splittr;
   if (!isNaN(str)) {
@@ -126,7 +154,7 @@ Handlebars.registerHelper('grid', function(str) {
 });
 
 
-},{}],6:[function(require,module,exports){
+},{"hbsfy/runtime":36}],7:[function(require,module,exports){
 module.exports = Backbone.Ribs.Model.extend({
   defaults: {
     name: void 0,
@@ -135,7 +163,16 @@ module.exports = Backbone.Ribs.Model.extend({
 });
 
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
+module.exports = Backbone.Ribs.Model.extend({
+  defaults: {
+    name: void 0,
+    price: 0
+  }
+});
+
+
+},{}],9:[function(require,module,exports){
 var Components;
 
 Components = require('components/index.coffee');
@@ -145,7 +182,8 @@ module.exports = Marionette.AppRouter.extend({
     '': 'home',
     'other': 'other',
     'list': 'list',
-    'logout': 'logout'
+    'logout': 'logout',
+    'table': 'table'
   },
   initialize: function() {
     return this.listenTo(this, 'route', function() {
@@ -157,21 +195,21 @@ module.exports = Marionette.AppRouter.extend({
 });
 
 
-},{"components/index.coffee":3}],8:[function(require,module,exports){
+},{"components/index.coffee":4}],10:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   return "<h1>Home</h1>\n";
   },"useData":true});
 
-},{"hbsfy/runtime":28}],9:[function(require,module,exports){
+},{"hbsfy/runtime":36}],11:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   return "No items yet\n";
   },"useData":true});
 
-},{"hbsfy/runtime":28}],10:[function(require,module,exports){
+},{"hbsfy/runtime":36}],12:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
@@ -182,34 +220,67 @@ module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"
     + "\n";
 },"useData":true});
 
-},{"hbsfy/runtime":28}],11:[function(require,module,exports){
+},{"hbsfy/runtime":36}],13:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   return "<h1>Logout</h1>\n";
   },"useData":true});
 
-},{"hbsfy/runtime":28}],12:[function(require,module,exports){
+},{"hbsfy/runtime":36}],14:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  return "<div class=\"container\">\n\n  <div class=\"navbar-header\">\n    <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#navbar\" aria-expanded=\"false\" aria-controls=\"navbar\">\n      <span class=\"sr-only\">Toggle navigation</span>\n      <span class=\"icon-bar\"></span>\n      <span class=\"icon-bar\"></span>\n      <span class=\"icon-bar\"></span>\n    </button>\n  </div>\n\n  <div id=\"navbar\" class=\"navbar-collapse collapse\">\n    <ul class=\"nav navbar-nav\">\n      <li><a href=\"/\"><i class=\"fa fa-fw fa-cube m-r-xs\"></i> Home</a></li>\n      <li><a href=\"/other\"><i class=\"fa fa-fw fa-cog m-r-xs\"></i> Other</a></li>\n      <li><a href=\"/list\"><i class=\"fa fa-fw fa-list m-r-xs\"></i> List</a></li>\n    </ul>\n    <ul class=\"nav navbar-nav navbar-right\">\n      <li><a href=\"/logout\"><i class=\"fa fa-fw fa-sign-out m-r-xs\"></i> Logout</a></li>\n    </ul>\n  </div>\n\n</div>\n";
+  return "<div class=\"container\">\n\n  <div class=\"navbar-header\">\n    <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#navbar\" aria-expanded=\"false\" aria-controls=\"navbar\">\n      <span class=\"sr-only\">Toggle navigation</span>\n      <span class=\"icon-bar\"></span>\n      <span class=\"icon-bar\"></span>\n      <span class=\"icon-bar\"></span>\n    </button>\n  </div>\n\n  <div id=\"navbar\" class=\"navbar-collapse collapse\">\n    <ul class=\"nav navbar-nav\">\n      <li><a href=\"/\"><i class=\"fa fa-fw fa-cube m-r-xs\"></i> Home</a></li>\n      <li><a href=\"/other\"><i class=\"fa fa-fw fa-cog m-r-xs\"></i> Other</a></li>\n      <li><a href=\"/list\"><i class=\"fa fa-fw fa-list m-r-xs\"></i> List</a></li>\n      <li><a href=\"/table\"><i class=\"fa fa-fw fa-table m-r-xs\"></i> Table</a></li>\n      <li><a href=\"/benchmark\"><i class=\"fa fa-fw fa-clock-o m-r-xs\"></i> Benchmark</a></li>\n    </ul>\n    <ul class=\"nav navbar-nav navbar-right\">\n      <li><a href=\"/logout\"><i class=\"fa fa-fw fa-sign-out m-r-xs\"></i> Logout</a></li>\n    </ul>\n  </div>\n\n</div>\n";
   },"useData":true});
 
-},{"hbsfy/runtime":28}],13:[function(require,module,exports){
+},{"hbsfy/runtime":36}],15:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   return "<h1>Other</h1>\n";
   },"useData":true});
 
-},{"hbsfy/runtime":28}],14:[function(require,module,exports){
+},{"hbsfy/runtime":36}],16:[function(require,module,exports){
+// hbsfy compiled Handlebars template
+var HandlebarsCompiler = require('hbsfy/runtime');
+module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+  return "<td colspan=\"99\">\n  <center>no items yet</center>\n</td>\n";
+  },"useData":true});
+
+},{"hbsfy/runtime":36}],17:[function(require,module,exports){
+// hbsfy compiled Handlebars template
+var HandlebarsCompiler = require('hbsfy/runtime');
+module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+  var helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
+  return "<thead>\n  <tr>\n    <td class=\""
+    + escapeExpression(((helpers.grid || (depth0 && depth0.grid) || helperMissing).call(depth0, 5, {"name":"grid","hash":{},"data":data})))
+    + "\">Name</td>\n    <td class=\""
+    + escapeExpression(((helpers.grid || (depth0 && depth0.grid) || helperMissing).call(depth0, 5, {"name":"grid","hash":{},"data":data})))
+    + "\">Price</td>\n    <td class=\""
+    + escapeExpression(((helpers.grid || (depth0 && depth0.grid) || helperMissing).call(depth0, 2, {"name":"grid","hash":{},"data":data})))
+    + "\"></td>\n  </tr>\n</thead>\n<tbody class=\"collection\">\n</tbody>\n<tfoot>\n  <tr>\n    <td colspan=\"99\">\n        <button id=\"add-item\" class=\"pull-right btn btn-xs btn-success\">\n          <i class=\"fa fa-fw fa-plus\"></i> add\n        </button>\n    </td>\n  </tr>\n</tfoot>\n";
+},"useData":true});
+
+},{"hbsfy/runtime":36}],18:[function(require,module,exports){
+// hbsfy compiled Handlebars template
+var HandlebarsCompiler = require('hbsfy/runtime');
+module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+  var helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
+  return "<td>\n  "
+    + escapeExpression(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"name","hash":{},"data":data}) : helper)))
+    + "\n</td>\n<td>\n  "
+    + escapeExpression(((helper = (helper = helpers.price || (depth0 != null ? depth0.price : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"price","hash":{},"data":data}) : helper)))
+    + "\n</td>\n<td>\n  <button class=\"delete-item pull-right btn btn-xs btn-danger\">\n    <i class=\"fa fa-fw fa-times\"></i> delete\n  </button>\n</td>\n";
+},"useData":true});
+
+},{"hbsfy/runtime":36}],19:[function(require,module,exports){
 module.exports = Marionette.ItemView.extend({
   template: require('templates/home.hbs')
 });
 
 
-},{"templates/home.hbs":8}],15:[function(require,module,exports){
+},{"templates/home.hbs":10}],20:[function(require,module,exports){
 module.exports = Marionette.ItemView.extend({
   template: require('templates/list/empty.hbs'),
   tagName: 'li',
@@ -217,7 +288,7 @@ module.exports = Marionette.ItemView.extend({
 });
 
 
-},{"templates/list/empty.hbs":9}],16:[function(require,module,exports){
+},{"templates/list/empty.hbs":11}],21:[function(require,module,exports){
 module.exports = Marionette.CollectionView.extend({
   childView: require('views/list/item.coffee'),
   emptyView: require('views/list/empty.coffee'),
@@ -244,7 +315,7 @@ module.exports = Marionette.CollectionView.extend({
 });
 
 
-},{"views/list/empty.coffee":15,"views/list/item.coffee":17}],17:[function(require,module,exports){
+},{"views/list/empty.coffee":20,"views/list/item.coffee":22}],22:[function(require,module,exports){
 module.exports = Marionette.ItemView.extend({
   template: require('templates/list/item.hbs'),
   tagName: 'li',
@@ -252,13 +323,13 @@ module.exports = Marionette.ItemView.extend({
 });
 
 
-},{"templates/list/item.hbs":10}],18:[function(require,module,exports){
+},{"templates/list/item.hbs":12}],23:[function(require,module,exports){
 module.exports = Marionette.ItemView.extend({
   template: require('templates/logout.hbs')
 });
 
 
-},{"templates/logout.hbs":11}],19:[function(require,module,exports){
+},{"templates/logout.hbs":13}],24:[function(require,module,exports){
 module.exports = Marionette.ItemView.extend({
   template: require('templates/navigation.hbs'),
   tagName: 'nav',
@@ -266,13 +337,53 @@ module.exports = Marionette.ItemView.extend({
 });
 
 
-},{"templates/navigation.hbs":12}],20:[function(require,module,exports){
+},{"templates/navigation.hbs":14}],25:[function(require,module,exports){
 module.exports = Marionette.ItemView.extend({
   template: require('templates/other.hbs')
 });
 
 
-},{"templates/other.hbs":13}],21:[function(require,module,exports){
+},{"templates/other.hbs":15}],26:[function(require,module,exports){
+module.exports = Marionette.ItemView.extend({
+  template: require('templates/table/empty.hbs'),
+  tagName: 'tr'
+});
+
+
+},{"templates/table/empty.hbs":16}],27:[function(require,module,exports){
+module.exports = Marionette.CompositeView.extend({
+  template: require('templates/table/index.hbs'),
+  tagName: 'table',
+  childView: require('views/table/item.coffee'),
+  emptyView: require('views/table/empty.coffee'),
+  childContainer: '.collection',
+  className: 'table bg-white table-bordered table-striped table-hover',
+  events: {
+    'click #add-item': 'addItem'
+  },
+  addItem: function() {
+    return this.collection.add({
+      name: 'Article',
+      price: 150
+    });
+  }
+});
+
+
+},{"templates/table/index.hbs":17,"views/table/empty.coffee":26,"views/table/item.coffee":28}],28:[function(require,module,exports){
+module.exports = Marionette.ItemView.extend({
+  template: require('templates/table/item.hbs'),
+  tagName: 'tr',
+  events: {
+    'click .delete-item': 'deleteItem'
+  },
+  deleteItem: function() {
+    return this.model.destroy();
+  }
+});
+
+
+},{"templates/table/item.hbs":18}],29:[function(require,module,exports){
 "use strict";
 /*globals Handlebars: true */
 var base = require("./handlebars/base");
@@ -308,7 +419,7 @@ Handlebars.create = create;
 Handlebars['default'] = Handlebars;
 
 exports["default"] = Handlebars;
-},{"./handlebars/base":22,"./handlebars/exception":23,"./handlebars/runtime":24,"./handlebars/safe-string":25,"./handlebars/utils":26}],22:[function(require,module,exports){
+},{"./handlebars/base":30,"./handlebars/exception":31,"./handlebars/runtime":32,"./handlebars/safe-string":33,"./handlebars/utils":34}],30:[function(require,module,exports){
 "use strict";
 var Utils = require("./utils");
 var Exception = require("./exception")["default"];
@@ -540,7 +651,7 @@ var createFrame = function(object) {
   return frame;
 };
 exports.createFrame = createFrame;
-},{"./exception":23,"./utils":26}],23:[function(require,module,exports){
+},{"./exception":31,"./utils":34}],31:[function(require,module,exports){
 "use strict";
 
 var errorProps = ['description', 'fileName', 'lineNumber', 'message', 'name', 'number', 'stack'];
@@ -569,7 +680,7 @@ function Exception(message, node) {
 Exception.prototype = new Error();
 
 exports["default"] = Exception;
-},{}],24:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 "use strict";
 var Utils = require("./utils");
 var Exception = require("./exception")["default"];
@@ -763,7 +874,7 @@ exports.noop = noop;function initData(context, data) {
   }
   return data;
 }
-},{"./base":22,"./exception":23,"./utils":26}],25:[function(require,module,exports){
+},{"./base":30,"./exception":31,"./utils":34}],33:[function(require,module,exports){
 "use strict";
 // Build out our basic SafeString type
 function SafeString(string) {
@@ -775,7 +886,7 @@ SafeString.prototype.toString = function() {
 };
 
 exports["default"] = SafeString;
-},{}],26:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 "use strict";
 /*jshint -W004 */
 var SafeString = require("./safe-string")["default"];
@@ -864,12 +975,12 @@ exports.isEmpty = isEmpty;function appendContextPath(contextPath, id) {
 }
 
 exports.appendContextPath = appendContextPath;
-},{"./safe-string":25}],27:[function(require,module,exports){
+},{"./safe-string":33}],35:[function(require,module,exports){
 // Create a simple path alias to allow browserify to resolve
 // the runtime on a supported path.
 module.exports = require('./dist/cjs/handlebars.runtime');
 
-},{"./dist/cjs/handlebars.runtime":21}],28:[function(require,module,exports){
+},{"./dist/cjs/handlebars.runtime":29}],36:[function(require,module,exports){
 module.exports = require("handlebars/runtime")["default"];
 
-},{"handlebars/runtime":27}]},{},[1]);
+},{"handlebars/runtime":35}]},{},[1]);
