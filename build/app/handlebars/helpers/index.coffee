@@ -1,3 +1,5 @@
+Handlebars = require 'hbsfy/runtime'
+
 Handlebars.registerHelper 'grid', (str) ->
   if !isNaN str
     returnValue = ['col-xs-'+str, 'col-sm-'+str, 'col-md-'+str, 'col-lg-'+str]
