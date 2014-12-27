@@ -1,6 +1,8 @@
 test/*.log
 node_modules/
 node_modules/*
+report/
+report/*
 npm-debug.log
 .*.sw[op]
 test/fixtures/*.log
