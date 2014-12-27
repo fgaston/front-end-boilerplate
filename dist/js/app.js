@@ -259,7 +259,7 @@ module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"
     + escapeExpression(((helpers.grid || (depth0 && depth0.grid) || helperMissing).call(depth0, 5, {"name":"grid","hash":{},"data":data})))
     + "\">Price</td>\n    <td class=\""
     + escapeExpression(((helpers.grid || (depth0 && depth0.grid) || helperMissing).call(depth0, 2, {"name":"grid","hash":{},"data":data})))
-    + "\"></td>\n  </tr>\n</thead>\n<tbody class=\"collection\">\n</tbody>\n<tfoot>\n  <tr>\n    <td colspan=\"99\">\n        <button id=\"add-item\" class=\"pull-right btn btn-xs btn-success\">\n          <i class=\"fa fa-fw fa-plus\"></i> add\n        </button>\n    </td>\n  </tr>\n</tfoot>\n";
+    + "\"></td>\n  </tr>\n</thead>\n<tbody class=\"collection\">\n</tbody>\n<tfoot>\n  <tr>\n    <td colspan=\"99\" class=\"no-padder\">\n        <button id=\"add-item\" class=\"m-xs pull-right btn btn-xs btn-success\">\n          <i class=\"fa fa-fw fa-plus\"></i> add\n        </button>\n    </td>\n  </tr>\n</tfoot>\n";
 },"useData":true});
 
 },{"hbsfy/runtime":36}],18:[function(require,module,exports){
@@ -271,7 +271,7 @@ module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"
     + escapeExpression(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"name","hash":{},"data":data}) : helper)))
     + "\n</td>\n<td>\n  "
     + escapeExpression(((helper = (helper = helpers.price || (depth0 != null ? depth0.price : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"price","hash":{},"data":data}) : helper)))
-    + "\n</td>\n<td>\n  <button class=\"delete-item pull-right btn btn-xs btn-danger\">\n    <i class=\"fa fa-fw fa-times\"></i> delete\n  </button>\n</td>\n";
+    + "\n</td>\n<td class=\"no-padder\">\n  <button class=\"m-r-xs m-t-xs delete-item pull-right btn btn-xs btn-danger\">\n    <i class=\"fa fa-fw fa-times\"></i> delete\n  </button>\n</td>\n";
 },"useData":true});
 
 },{"hbsfy/runtime":36}],19:[function(require,module,exports){
