@@ -3,7 +3,9 @@ HomeView        = require 'views/home.coffee'
 OtherView       = require 'views/other.coffee'
 LogoutView      = require 'views/logout.coffee'
 ListView        = require 'views/list/index.coffee'
+TableView       = require 'views/table/index.coffee'
 ListCollection  = require 'collections/list.coffee'
+TableCollection = require 'collections/table.coffee'
 
 module.exports = Marionette.Controller.extend
   initialize: (options) ->
@@ -24,3 +26,7 @@ module.exports = Marionette.Controller.extend
     @displayNavigation()
     @App.main.show new ListView
       collection: new ListCollection
+  table: ->
+    @displayNavigation()
+    @App.main.show new TableView
+      collection: new TableCollection
