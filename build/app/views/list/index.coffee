@@ -1,6 +1,6 @@
 module.exports = Marionette.CollectionView.extend
-  childView:  require('views/list/item.coffee')
-  emptyView:  require('views/list/empty.coffee')
+  childView:  require 'views/list/item.coffee'
+  emptyView:  require 'views/list/empty.coffee'
   tagName:    'ul'
   className:  'list-group'
   onShow:     ->
