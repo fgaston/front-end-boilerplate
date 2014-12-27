@@ -47,7 +47,7 @@ module.exports = function(grunt) {
           'dist/js/app.js': ['build/app/application.coffee']
         },
         options: {
-          transform: ['caching-coffeeify', 'hbsfy'],
+          transform: ['caching-coffeeify', 'hbsfy', 'uglifyify'],
           browserifyOptions: {
             paths: ['./build/app']
           }

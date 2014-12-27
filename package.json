@@ -28,6 +28,7 @@
     "grunt-contrib-uglify": "^0.6.0",
     "grunt-contrib-watch": "^0.6.0",
     "handlebars": "^2.0.0",
-    "hbsfy": "^2.2.1"
+    "hbsfy": "^2.2.1",
+    "uglifyify": "^2.6.0"
   }
 }
