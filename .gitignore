@@ -1,9 +1,7 @@
 test/*.log
 node_modules/
 node_modules/*
+dist/js/app.js
 report/
 report/*
 npm-debug.log
-.*.sw[op]
-test/fixtures/*.log
-.idea
