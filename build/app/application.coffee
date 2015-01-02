@@ -1,6 +1,5 @@
 Controller  = require 'controller.coffee'
 Router      = require 'router.coffee'
-Components  = require 'components/index.coffee'
 require 'handlebars/helpers/index.coffee'
 
 module.exports = App = new Marionette.Application()
