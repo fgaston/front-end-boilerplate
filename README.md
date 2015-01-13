@@ -7,19 +7,33 @@ Front-end Boilerplate
 Technologies used:
 -
 - HTML5 + CSS3
-- JavaScript with CoffeeScript
+- JavaScript/CoffeeScript
 
 Third party tools and libraries used:
 -
 - jQuery
 - Bootstrap Theme: "Scale" by flatfull
-- Grunt
-- Browserify (using: caching-coffeeify and hbsfy)
+- Grunt (watch, concat and uglify)
+- Browserify (caching-coffeeify, hbsfy and uglifify)
+- Underscore
 - Backbone
 - Marionette
 
 Steps
+=====
+
+Pre-Requisites
 -
 1. npm install
-2. npm start
+2. grunt build
+
+Development
+-
+1. npm start
+2. grunt
 3. open http://localhost:8315
+
+QA
+-
+1. npm start
+2. open http://localhost:8315

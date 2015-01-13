@@ -12,14 +12,15 @@ App.addRegions
 App.addInitializer ->
   Router = App.Router = new Router
     controller: new Controller
-      App: App
-  Backbone.history.start pushState: true
+      app: App
+  Backbone.history.start
+    pushState: true
 
-$(document).on 'click', 'a', (e) ->
+$('main').on 'click', 'a', (e) ->
   if !$(@).attr('data-toggle')
     href = $(@).attr('href') || '/'
-    App.Router.navigate href, true
+    App.Router.navigate(href, true)
     return false
 
-$(document).ready ->
+$('main').ready ->
   App.start()

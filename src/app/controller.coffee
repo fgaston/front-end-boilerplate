@@ -13,24 +13,24 @@ TableCollection = require 'collections/table.coffee'
 # exports
 module.exports = Marionette.Controller.extend
   initialize: (options) ->
-    @App = options.App
+    @app = options.app
   displayNavigation: ->
     @NavigationView = @NavigationView || new NavigationView
-    @App.header.show @NavigationView
+    @app.header.show @NavigationView
   home: ->
     @displayNavigation()
-    @App.main.show new HomeView
+    @app.main.show new HomeView
   other: ->
     @displayNavigation()
-    @App.main.show new OtherView
+    @app.main.show new OtherView
   logout: ->
     @displayNavigation()
-    @App.main.show new LogoutView
+    @app.main.show new LogoutView
   list: ->
     @displayNavigation()
-    @App.main.show new ListView
+    @app.main.show new ListView
       collection: new ListCollection
   table: ->
     @displayNavigation()
-    @App.main.show new TableView
+    @app.main.show new TableView
       collection: new TableCollection

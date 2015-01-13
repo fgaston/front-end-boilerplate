@@ -1,6 +1,7 @@
 module.exports = function(grunt) {
 
   grunt.registerTask('default', 'watch');
+  grunt.registerTask('build', ['browserify:ugly', 'uglify']);
 
   var pkg = grunt.file.readJSON('package.json');
 
@@ -24,13 +25,13 @@ module.exports = function(grunt) {
       },
       hbsfy: {
         files: ['src/app/templates/**/*.hbs'],
-        tasks: ['browserify']
+        tasks: ['browserify:clean']
       },
       buildjs: {
         files: [
           'src/app/**/*.coffee',
         ],
-        tasks: ['browserify']
+        tasks: ['browserify:clean']
       },
       vendor: {
         files: ['src/vendor/**/*.js'],
@@ -42,7 +43,18 @@ module.exports = function(grunt) {
       }
     },
     browserify: {
-      dist: {
+      clean: {
+        files: {
+          'dist/js/app.js': ['src/app/application.coffee']
+        },
+        options: {
+          transform: ['caching-coffeeify', 'hbsfy'],
+          browserifyOptions: {
+            paths: ['./src/app']
+          }
+        }
+      },
+      ugly: {
         files: {
           'dist/js/app.js': ['src/app/application.coffee']
         },
@@ -51,6 +63,13 @@ module.exports = function(grunt) {
           browserifyOptions: {
             paths: ['./src/app']
           }
+        }
+      }
+    },
+    uglify: {
+      dist: {
+        files: {
+          'dist/js/app.js': ['dist/js/app.js']
         }
       }
     },
@@ -77,5 +96,6 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-browserify');
 };
