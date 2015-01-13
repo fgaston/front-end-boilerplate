@@ -19,7 +19,7 @@ Third party tools and libraries used:
 - Backbone
 - Marionette
 
-Steps
+Setup
 =====
 
 Pre-Requisites
