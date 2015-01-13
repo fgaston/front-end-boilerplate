@@ -5,3 +5,4 @@ dist/js/app.js
 report/
 report/*
 npm-debug.log
+.DS_STORE

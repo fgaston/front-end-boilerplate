@@ -17,3 +17,9 @@ Third party tools and libraries used:
 - Browserify (using: caching-coffeeify and hbsfy)
 - Backbone
 - Marionette
+
+Steps
+-
+1. npm install
+2. npm start
+3. open http://localhost:8315

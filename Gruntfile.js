@@ -11,7 +11,7 @@ module.exports = function(grunt) {
         files: ['Gruntfile.js']
       },
       concatcss: {
-        files: 'build/css/**/*.css',
+        files: 'src/css/**/*.css',
         tasks: 'concat:css'
       },
       appjs: {
@@ -23,33 +23,33 @@ module.exports = function(grunt) {
         options: { livereload: true }
       },
       hbsfy: {
-        files: ['build/app/templates/**/*.hbs'],
+        files: ['src/app/templates/**/*.hbs'],
         tasks: ['browserify']
       },
       buildjs: {
         files: [
-          'build/app/**/*.coffee',
+          'src/app/**/*.coffee',
         ],
         tasks: ['browserify']
       },
       vendor: {
-        files: ['build/vendor/**/*.js'],
+        files: ['src/vendor/**/*.js'],
         tasks: ['concat:vendor']
       },
       plugins: {
-        files: ['build/plugins/**/*.js'],
+        files: ['src/plugins/**/*.js'],
         tasks: ['concat:plugins']
       }
     },
     browserify: {
       dist: {
         files: {
-          'dist/js/app.js': ['build/app/application.coffee']
+          'dist/js/app.js': ['src/app/application.coffee']
         },
         options: {
           transform: ['caching-coffeeify', 'hbsfy', 'uglifyify'],
           browserifyOptions: {
-            paths: ['./build/app']
+            paths: ['./src/app']
           }
         }
       }
@@ -57,19 +57,19 @@ module.exports = function(grunt) {
     concat: {
       css: {
         files: {
-          'dist/css/bundle.css': ['build/css/**/*.css']
+          'dist/css/bundle.css': ['src/css/**/*.css']
         }
       },
       vendor: {
         separator: ';',
         files: {
-          'dist/js/vendor.js': ['build/vendor/**/*.js']
+          'dist/js/vendor.js': ['src/vendor/**/*.js']
         }
       },
       plugins: {
         separator: ';',
         files: {
-          'dist/js/plugins.js': ['build/plugins/**/*.js']
+          'dist/js/plugins.js': ['src/plugins/**/*.js']
         }
       }
     }
