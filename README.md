@@ -34,12 +34,12 @@ Development
 ```
 npm start
 grunt
-open http://localhost:8315
+open http://localhost:8315 --fresh
 ```
 
 QA
 -
 ```
 npm start
-open http://localhost:8315
+open http://localhost:8315 --fresh
 ```
