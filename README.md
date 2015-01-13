@@ -24,16 +24,22 @@ Steps
 
 Pre-Requisites
 -
-1. npm install
-2. grunt build
+```
+npm install
+grunt build
+```
 
 Development
 -
-1. npm start
-2. grunt
-3. open http://localhost:8315
+```
+npm start
+grunt
+open http://localhost:8315
+```
 
 QA
 -
-1. npm start
-2. open http://localhost:8315
+```
+npm start
+open http://localhost:8315
+```
