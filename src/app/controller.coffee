@@ -15,21 +15,21 @@ module.exports = Marionette.Controller.extend
     @app = app
   displayNavigation: ->
     @navigationView = @navigationView || new NavigationView
-    @app.header.show @navigationView
+    @app.getRegion('header').show @navigationView
   home: ->
     @displayNavigation()
-    @app.main.show new HomeView
+    @app.getRegion('main').show new HomeView
   other: ->
     @displayNavigation()
-    @app.main.show new OtherView
+    @app.getRegion('main').show new OtherView
   logout: ->
     @displayNavigation()
-    @app.main.show new LogoutView
+    @app.getRegion('main').show new LogoutView
   list: ->
     @displayNavigation()
-    @app.main.show new ListView
+    @app.getRegion('main').show new ListView
       collection: new ListCollection
   table: ->
     @displayNavigation()
-    @app.main.show new TableView
+    @app.getRegion('main').show new TableView
       collection: new TableCollection

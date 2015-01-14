@@ -1,6 +1,7 @@
 Controller  = require 'controller.coffee'
 Router      = require 'router.coffee'
 require 'handlebars/helpers/index.coffee'
+require 'handlebars/partials/index.coffee'
 
 module.exports = App = new Marionette.Application
   initialize: ->
@@ -9,11 +10,10 @@ module.exports = App = new Marionette.Application
         controller: new Controller @
       Backbone.history.start
         pushState: true
-
-App.addRegions
-  header:  '#header-region'
-  main:    '#main-region'
-  dialogs: '#dialog-region'
+  regions:
+    header:  '#header-region'
+    main:    '#main-region'
+    dialogs: '#dialog-region'
 
 $('main').on 'click', 'a', (e) ->
   if !$(@).attr('data-toggle')

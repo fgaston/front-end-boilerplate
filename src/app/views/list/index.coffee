@@ -1,9 +1,9 @@
 module.exports = Marionette.CollectionView.extend
-  childView:  require 'views/list/item.coffee'
-  emptyView:  require 'views/list/empty.coffee'
-  tagName:    'ul'
-  className:  'list-group'
-  onShow:     ->
+  childView: require 'views/list/item.coffee'
+  emptyView: require 'views/list/empty.coffee'
+  tagName: 'ul'
+  className: 'list-group'
+  onShow: ->
     if @interval
       clearInterval @interval
     @interval = setInterval =>
@@ -11,6 +11,6 @@ module.exports = Marionette.CollectionView.extend
         name: 'test'
         price: 100
     , 500
-  onDestroy:    ->
+  onDestroy: ->
     if @interval
       clearInterval @interval
