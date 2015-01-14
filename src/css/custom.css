@@ -1,7 +1,11 @@
 #main-region {
-  padding-top: 60px;
+  padding-top: 90px;
 }
 
 nav, nav a {
   transition: all 0.15s ease-in-out;
+}
+
+.btn:focus {
+  outline: none !important;
 }

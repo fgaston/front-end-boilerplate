@@ -12,7 +12,7 @@ Technologies used:
 Third party tools and libraries used:
 -
 - jQuery
-- Bootstrap Theme: "Scale" by flatfull
+- Bootstrap Theme: "Paper" by Bootswatch
 - Grunt (watch, concat and uglify)
 - Browserify (caching-coffeeify, hbsfy and uglifify)
 - Underscore
