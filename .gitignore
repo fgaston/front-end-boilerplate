@@ -1,4 +1,5 @@
 test/*.log
+node_modules
 node_modules/
 node_modules/*
 dist/js/app.js

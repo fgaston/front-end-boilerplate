@@ -10,13 +10,12 @@ TableView       = require 'views/table/index.coffee'
 ListCollection  = require 'collections/list.coffee'
 TableCollection = require 'collections/table.coffee'
 
-# exports
 module.exports = Marionette.Controller.extend
-  initialize: (options) ->
-    @app = options.app
+  initialize: (app) ->
+    @app = app
   displayNavigation: ->
-    @NavigationView = @NavigationView || new NavigationView
-    @app.header.show @NavigationView
+    @navigationView = @navigationView || new NavigationView
+    @app.header.show @navigationView
   home: ->
     @displayNavigation()
     @app.main.show new HomeView

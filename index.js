@@ -1,6 +1,6 @@
-var superstatic = require('superstatic/lib/server');
+var server = require('superstatic/lib/server');
 
-var spec = {
+var options = {
   gzip: true,
   port: 8315,
   config: {
@@ -12,4 +12,6 @@ var spec = {
   errorPage: './dist/index.html'
 };
 
-superstatic(spec).listen();
+server(options).listen(function() {
+  console.info('[INFO]', 'running on port:', options.port);
+});
