@@ -1,7 +1,7 @@
 module.exports = function(grunt) {
 
   grunt.registerTask('default', 'watch');
-  grunt.registerTask('build', ['browserify:ugly', 'uglify']);
+  grunt.registerTask('build', ['browserify:ugly', 'uglify', 'cssmin']);
 
   var pkg = grunt.file.readJSON('package.json');
 
@@ -11,16 +11,16 @@ module.exports = function(grunt) {
       grunt: {
         files: ['Gruntfile.js']
       },
-      concatcss: {
+      minifycss: {
         files: 'src/css/**/*.css',
-        tasks: 'concat:css'
+        tasks: 'cssmin'
       },
       appjs: {
         files: ['dist/js/app.js'],
         options: { livereload: true }
       },
       appcss: {
-        files: ['dist/css/**/*.css'],
+        files: ['dist/css/bundle.css'],
         options: { livereload: true }
       },
       hbsfy: {
@@ -73,12 +73,14 @@ module.exports = function(grunt) {
         }
       }
     },
-    concat: {
-      css: {
+    cssmin: {
+      target: {
         files: {
           'dist/css/bundle.css': ['src/css/**/*.css']
         }
-      },
+      }
+    },
+    concat: {
       vendor: {
         separator: ';',
         files: {
@@ -96,6 +98,7 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-browserify');
 };
