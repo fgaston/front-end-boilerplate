@@ -6,10 +6,9 @@ var options = {
   config: {
     root: './dist',
     routes: {
-      '**': './dist/index.html'
+      '**': 'index.html'
     }
-  },
-  errorPage: './dist/index.html'
+  }
 };
 
 server(options).listen(function() {
