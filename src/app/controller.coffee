@@ -11,25 +11,23 @@ ListCollection  = require 'collections/list.coffee'
 TableCollection = require 'collections/table.coffee'
 
 module.exports = Marionette.Controller.extend
-  initialize: (app) ->
-    @app = app
   displayNavigation: ->
     @navigationView = @navigationView || new NavigationView
-    @app.getRegion('header').show @navigationView
+    App.getRegion('header').show(@navigationView)
   home: ->
     @displayNavigation()
-    @app.getRegion('main').show new HomeView
+    App.getRegion('main').show(new HomeView)
   other: ->
     @displayNavigation()
-    @app.getRegion('main').show new OtherView
+    App.getRegion('main').show(new OtherView)
   logout: ->
     @displayNavigation()
-    @app.getRegion('main').show new LogoutView
+    App.getRegion('main').show(new LogoutView)
   list: ->
     @displayNavigation()
-    @app.getRegion('main').show new ListView
+    App.getRegion('main').show new ListView
       collection: new ListCollection
   table: ->
     @displayNavigation()
-    @app.getRegion('main').show new TableView
+    App.getRegion('main').show new TableView
       collection: new TableCollection
