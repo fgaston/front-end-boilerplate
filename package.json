@@ -30,8 +30,6 @@
     "uglifyify": "^2.6.0"
   },
   "dependencies": {
-    "clear-require": "^1.0.1",
-    "fs-extra": "^0.14.0",
-    "superstatic": "^2.0.0-rc1"
+    "superstatic": "^2.0.0-rc4"
   }
 }
