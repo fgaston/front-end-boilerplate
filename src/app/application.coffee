@@ -1,25 +1,21 @@
-Controller  = require 'controller.coffee'
-Router      = require 'router.coffee'
+Controller = require 'controller.coffee'
+Router = require 'router.coffee'
 require 'handlebars/helpers/index.coffee'
 require 'handlebars/partials/index.coffee'
+require 'app-bootstrapper.coffee'
+window.debug = require 'debug.coffee'
 
-module.exports = App = new Marionette.Application
+module.exports = window.App = new Marionette.Application
   initialize: ->
+    @debug = true
+    @Controller = new Controller @
+    @router = new Router
+      controller: @Controller
     @listenTo @, 'start', ->
-      Router = App.Router = new Router
-        controller: new Controller @
+      debug 'timeEnd', 'app:start'
       Backbone.history.start
         pushState: true
   regions:
     header:  '#header-region'
     main:    '#main-region'
     dialogs: '#dialog-region'
-
-$('main').on 'click', 'a', (e) ->
-  if !$(@).attr('data-toggle')
-    href = $(@).attr('href') || '/'
-    App.Router.navigate(href, true)
-    return false
-
-$ ->
-  App.start()
