@@ -25,7 +25,8 @@ Setup
 Pre-Requisites
 -
 ```
-npm install
+sudo npm install grunt-cli -g
+sudo npm install
 grunt build
 ```
 
