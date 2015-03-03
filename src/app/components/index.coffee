@@ -1,3 +1,4 @@
+
 module.exports.setActiveLinks = (href) ->
   fragment = '/'+href.split('/')[1]
   $('#navbar li').removeClass('active')

@@ -17,11 +17,11 @@ module.exports = function(grunt) {
       },
       appjs: {
         files: ['dist/js/app.js'],
-        options: { livereload: true }
+        options: {livereload: true}
       },
       appcss: {
         files: ['dist/css/bundle.css'],
-        options: { livereload: true }
+        options: {livereload: true}
       },
       hbsfy: {
         files: ['src/app/templates/**/*.hbs'],
@@ -30,6 +30,7 @@ module.exports = function(grunt) {
       buildjs: {
         files: [
           'src/app/**/*.coffee',
+          'src/app/**/*.iced'
         ],
         tasks: ['browserify:clean']
       },

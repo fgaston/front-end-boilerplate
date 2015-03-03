@@ -6,6 +6,7 @@ var options = {
   config: {
     root: './dist',
     routes: {
+      'css/**': 'css/bundle.css',
       '**': 'index.html'
     }
   }

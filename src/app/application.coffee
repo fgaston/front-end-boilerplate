@@ -9,6 +9,7 @@ module.exports = window.App = new Marionette.Application
   initialize: ->
     @debug = true
     @Controller = new Controller @
+    @Vent = new Backbone.Wreqr.EventAggregator()
     @router = new Router
       controller: @Controller
     @listenTo @, 'start', ->
