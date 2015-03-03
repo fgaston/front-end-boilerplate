@@ -37,7 +37,7 @@ grunt
 open http://localhost:8315 --fresh
 ```
 
-QA
+UAT
 -
 ```
 npm start
