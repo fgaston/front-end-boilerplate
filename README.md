@@ -1,5 +1,5 @@
 [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
-[![Dependencies](https://david-dm.org/lgubenis/front-end-boilerplate.png)](https://david-dm.org/)
+[![Dependencies](https://david-dm.org/elgubenis/front-end-boilerplate.svg)](https://david-dm.org/)
 
 Front-end Boilerplate
 =========================
