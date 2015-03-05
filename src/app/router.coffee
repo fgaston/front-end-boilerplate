@@ -3,10 +3,7 @@ Components = require 'components/index.coffee'
 module.exports = Marionette.AppRouter.extend
   appRoutes:
     ''            : 'home'
-    'other'       : 'other'
-    'list'        : 'list'
-    'logout'      : 'logout'
-    'table'       : 'table'
+    'shop'        : 'showShop'
   initialize: ->
     @listenTo @, 'route', ->
       _.defer ->

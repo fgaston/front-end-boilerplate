@@ -3,15 +3,15 @@ Router = require 'router.coffee'
 require 'handlebars/helpers/index.coffee'
 require 'handlebars/partials/index.coffee'
 require 'app-bootstrapper.coffee'
-window.debug = require 'debug.coffee'
+debug = require 'debug.coffee'
 
 module.exports = window.App = new Marionette.Application
   initialize: ->
     @debug = true
-    @Controller = new Controller @
+    @controller = new Controller()
     @Vent = new Backbone.Wreqr.EventAggregator()
     @router = new Router
-      controller: @Controller
+      controller: @controller
     @listenTo @, 'start', ->
       debug 'timeEnd', 'app:start'
       Backbone.history.start

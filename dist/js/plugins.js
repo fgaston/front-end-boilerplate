@@ -4,4 +4,341 @@
 
 (function(){var a=function(a,b){return function(){return a.apply(b,arguments)}},b={}.hasOwnProperty,c=function(a,c){function d(){this.constructor=a}for(var e in c)b.call(c,e)&&(a[e]=c[e]);return d.prototype=c.prototype,a.prototype=new d,a.__super__=c.prototype,a};!function(a){return"function"==typeof define&&define.amd?define(["underscore","backbone","backbone.marionette","exports"],a):"object"==typeof exports?a(require("underscore"),require("backbone"),require("backbone.marionette"),exports):a(_,Backbone,Backbone.Marionette,{})}(function(b,d,e,f){return f=function(f){function g(){return this.destroy=a(this.destroy,this),g.__super__.constructor.apply(this,arguments)}return c(g,f),g.prototype.modals=[],g.prototype.zIndex=0,g.prototype.show=function(a,c){var f,g,h,i,j,k,l,m,n;for(null==c&&(c={}),this._ensureElement(),d.$("body").css({overflow:"hidden"}),this.modals.length>0&&(f=b.last(this.modals),f.modalEl.addClass(""+f.prefix+"-view--stacked"),h=this.modals[this.modals.length-1],null!=h&&h.modalEl.removeClass(""+h.prefix+"-modal--stacked-reverse")),a.render(c),a.regionEnabled=!0,this.triggerMethod("before:swap",a),this.triggerMethod("before:show",a),e.triggerMethodOn(a,"before:show"),this.triggerMethod("swapOut",this.currentView),this.$el.append(a.el),this.currentView=a,this.triggerMethod("swap",a),this.triggerMethod("show",a),e.triggerMethodOn(a,"show"),m=this.modals,i=0,k=m.length;k>i;i++)g=m[i],g.undelegateModalEvents();for(n=this.modals,j=0,l=n.length;l>j;j++)g=n[j],g.$el.css({background:"none"});return a.on("modal:destroy",this.destroy),this.modals.push(a),this.zIndex++},g.prototype.destroy=function(){var a,c;return(c=this.currentView)?(c.destroy&&!c.isDestroyed?c.destroy():c.remove&&c.remove(),c.off("modal:destroy",this.destroy),this.modals.splice(b.indexOf(this.modals,c),1),this.zIndex--,this.currentView=this.modals[this.zIndex-1],a=b.last(this.modals),a&&(a.$el.removeAttr("style"),a.modalEl.addClass(""+a.prefix+"-modal--stacked-reverse"),b.delay(function(){return function(){return a.modalEl.removeClass(""+a.prefix+"-modal--stacked")}}(this),300),0!==this.zIndex&&a.delegateModalEvents()),0===this.zIndex&&d.$("body").css({overflow:"visible"}),this.triggerMethod("modal:destroy",c)):void 0},g.prototype.destroyAll=function(){var a,b,c,d,e;for(d=this.modals,e=[],b=0,c=d.length;c>b;b++)a=d[b],e.push(this.destroy());return e},g}(e.Region),e.Modals=f,e.Modals})}).call(this);
 (function(){var a=function(a,b){return function(){return a.apply(b,arguments)}},b={}.hasOwnProperty,c=function(a,c){function d(){this.constructor=a}for(var e in c)b.call(c,e)&&(a[e]=c[e]);return d.prototype=c.prototype,a.prototype=new d,a.__super__=c.prototype,a},d=[].indexOf||function(a){for(var b=0,c=this.length;c>b;b++)if(b in this&&this[b]===a)return b;return-1};!function(a){return"function"==typeof define&&define.amd?define(["underscore","backbone","exports"],a):"object"==typeof exports?a(require("underscore"),require("backbone"),exports):a(_,Backbone,{})}(function(b,e,f){return f=function(f){function g(){this.triggerCancel=a(this.triggerCancel,this),this.triggerSubmit=a(this.triggerSubmit,this),this.triggerView=a(this.triggerView,this),this.clickOutside=a(this.clickOutside,this),this.checkKey=a(this.checkKey,this),this.rendererCompleted=a(this.rendererCompleted,this),this.args=Array.prototype.slice.apply(arguments),e.View.prototype.constructor.apply(this,this.args),this.setUIElements()}return c(g,f),g.prototype.prefix="bbm",g.prototype.animate=!0,g.prototype.keyControl=!0,g.prototype.showViewOnRender=!0,g.prototype.render=function(a){var c,d;return c=this.serializeData(),(!a||b.isEmpty(a))&&(a=0),this.$el.addClass(""+this.prefix+"-wrapper"),this.modalEl=e.$("<div />").addClass(""+this.prefix+"-modal"),this.template&&this.modalEl.html(this.template(c)),this.$el.html(this.modalEl),this.viewContainer?(this.viewContainerEl=this.modalEl.find(this.viewContainer),this.viewContainerEl.addClass(""+this.prefix+"-modal__views")):this.viewContainerEl=this.modalEl,$(":focus").blur(),(null!=(d=this.views)?d.length:void 0)>0&&this.showViewOnRender&&this.openAt(a),"function"==typeof this.onRender&&this.onRender(),this.delegateModalEvents(),this.trigger("modal:open"),this.$el.fadeIn&&this.animate?(this.modalEl.css({opacity:0}),this.$el.fadeIn({duration:100,complete:this.rendererCompleted})):this.rendererCompleted(),this},g.prototype.rendererCompleted=function(){var a;return this.keyControl&&(e.$("body").on("keyup",this.checkKey),e.$("body").on("click",this.clickOutside)),this.modalEl.css({opacity:1}).addClass(""+this.prefix+"-modal--open"),"function"==typeof this.onShow&&this.onShow(),null!=(a=this.currentView)&&"function"==typeof a.onShow?a.onShow():void 0},g.prototype.setUIElements=function(){var a;if(this.template=this.getOption("template"),this.views=this.getOption("views"),null!=(a=this.views)&&(a.length=b.size(this.views)),this.viewContainer=this.getOption("viewContainer"),this.animate=this.getOption("animate"),b.isUndefined(this.template)&&b.isUndefined(this.views))throw new Error("No template or views defined for Backbone.Modal");if(this.template&&this.views&&b.isUndefined(this.viewContainer))throw new Error("No viewContainer defined for Backbone.Modal")},g.prototype.getOption=function(a){return a?this.options&&d.call(this.options,a)>=0&&null!=this.options[a]?this.options[a]:this[a]:void 0},g.prototype.serializeData=function(){var a;return a={},this.model&&(a=b.extend(a,this.model.toJSON())),this.collection&&(a=b.extend(a,{items:this.collection.toJSON()})),a},g.prototype.delegateModalEvents=function(){var a,c,d,e,f,g,h;this.active=!0,a=this.getOption("cancelEl"),f=this.getOption("submitEl"),f&&this.$el.on("click",f,this.triggerSubmit),a&&this.$el.on("click",a,this.triggerCancel),h=[];for(c in this.views)b.isString(c)&&"length"!==c?(d=c.match(/^(\S+)\s*(.*)$/),g=d[1],e=d[2],h.push(this.$el.on(g,e,this.views[c],this.triggerView))):h.push(void 0);return h},g.prototype.undelegateModalEvents=function(){var a,c,d,e,f,g,h;this.active=!1,a=this.getOption("cancelEl"),f=this.getOption("submitEl"),f&&this.$el.off("click",f,this.triggerSubmit),a&&this.$el.off("click",a,this.triggerCancel),h=[];for(c in this.views)b.isString(c)&&"length"!==c?(d=c.match(/^(\S+)\s*(.*)$/),g=d[1],e=d[2],h.push(this.$el.off(g,e,this.views[c],this.triggerView))):h.push(void 0);return h},g.prototype.checkKey=function(a){if(this.active)switch(a.keyCode){case 27:return this.triggerCancel(a);case 13:return this.triggerSubmit(a)}},g.prototype.clickOutside=function(a){return e.$(a.target).hasClass(""+this.prefix+"-wrapper")&&this.active?this.triggerCancel():void 0},g.prototype.buildView=function(a,c){var d;if(a)return c&&b.isFunction(c)&&(c=c()),b.isFunction(a)?(d=new a(c||this.args[0]),d instanceof e.View?{el:d.render().$el,view:d}:{el:a(c||this.args[0])}):{view:a,el:a.$el}},g.prototype.triggerView=function(a){var c,d,e,f,g,h,i;if(null!=a&&"function"==typeof a.preventDefault&&a.preventDefault(),f=a.data,d=this.buildView(f.view,f.viewOptions),this.currentView&&(this.previousView=this.currentView,!(null!=(i=f.openOptions)?i.skipSubmit:void 0))){if(("function"==typeof(g=this.previousView).beforeSubmit?g.beforeSubmit():void 0)===!1)return;"function"==typeof(h=this.previousView).submit&&h.submit()}this.currentView=d.view||d.el,c=0;for(e in this.views)f.view===this.views[e].view&&(this.currentIndex=c),c++;return f.onActive&&(b.isFunction(f.onActive)?f.onActive(this):b.isString(f.onActive)&&this[f.onActive].call(this,f)),this.shouldAnimate?this.animateToView(d.el):(this.shouldAnimate=!0,this.$(this.viewContainerEl).html(d.el))},g.prototype.animateToView=function(a){var b,c,d,f,g,h,i;return f={position:"relative",top:-9999,left:-9999},g=e.$("<tester/>").css(f),g.html(this.$el.clone().css(f)),0!==e.$("tester").length?e.$("tester").replaceWith(g):e.$("body").append(g),b=g.find(this.viewContainer?this.viewContainer:"."+this.prefix+"-modal"),b.removeAttr("style"),d=b.outerHeight(),b.html(a),c=b.outerHeight(),d===c?(this.$(this.viewContainerEl).html(a),"function"==typeof(h=this.currentView).onShow&&h.onShow(),null!=(i=this.previousView)&&"function"==typeof i.destroy?i.destroy():void 0):this.animate?(this.$(this.viewContainerEl).css({opacity:0}),this.$(this.viewContainerEl).animate({height:c},100,function(b){return function(){var c,d;return b.$(b.viewContainerEl).css({opacity:1}).removeAttr("style"),b.$(b.viewContainerEl).html(a),"function"==typeof(c=b.currentView).onShow&&c.onShow(),null!=(d=b.previousView)&&"function"==typeof d.destroy?d.destroy():void 0}}(this))):this.$(this.viewContainerEl).css({height:c}).html(a)},g.prototype.triggerSubmit=function(a){var b,c;return null!=a&&a.preventDefault(),this.beforeSubmit&&this.beforeSubmit()===!1||this.currentView&&this.currentView.beforeSubmit&&this.currentView.beforeSubmit()===!1?void 0:this.submit||(null!=(b=this.currentView)?b.submit:void 0)||this.getOption("submitEl")?(null!=(c=this.currentView)&&"function"==typeof c.submit&&c.submit(),"function"==typeof this.submit&&this.submit(),this.regionEnabled?this.trigger("modal:destroy"):this.destroy()):this.triggerCancel()},g.prototype.triggerCancel=function(a){return null!=a&&a.preventDefault(),this.beforeCancel&&this.beforeCancel()===!1?void 0:("function"==typeof this.cancel&&this.cancel(),this.regionEnabled?this.trigger("modal:destroy"):this.destroy())},g.prototype.destroy=function(){var a;return e.$("body").off("keyup",this.checkKey),e.$("body").off("click",this.clickOutside),"function"==typeof this.onDestroy&&this.onDestroy(),this.shouldAnimate=!1,this.modalEl.addClass(""+this.prefix+"-modal--destroy"),a=function(a){return function(){var b;return null!=(b=a.currentView)&&"function"==typeof b.remove&&b.remove(),a.remove()}}(this),this.$el.fadeOut&&this.animate?(this.$el.fadeOut({duration:200}),b.delay(function(){return a()},200)):a()},g.prototype.openAt=function(a){var c,d,e,f,g;b.isNumber(a)?c=a:b.isNumber(a._index)&&(c=a._index),e=0;for(f in this.views)if("length"!==f)if(b.isNumber(c))e===c&&(g=this.views[f]),e++;else if(b.isObject(a))for(d in this.views[f])a[d]===this.views[f][d]&&(g=this.views[f]);return g&&(this.currentIndex=b.indexOf(this.views,g),this.triggerView({data:b.extend(g,{openOptions:a})})),this},g.prototype.next=function(a){return null==a&&(a={}),this.currentIndex+1<this.views.length?this.openAt(b.extend(a,{_index:this.currentIndex+1})):void 0},g.prototype.previous=function(a){return null==a&&(a={}),this.currentIndex-1<this.views.length-1?this.openAt(b.extend(a,{_index:this.currentIndex-1})):void 0},g}(e.View),e.Modal=f,e.Modal})}).call(this);
+/*! BigText - v0.1.8 - 2015-02-28
+ * https://github.com/zachleat/bigtext
+ * Copyright (c) 2015 Zach Leatherman (@zachleat)
+ * MIT License */
+
+(function(window, $) {
+  "use strict";
+
+  var counter = 0,
+    $headCache = $('head'),
+    oldBigText = window.BigText,
+    oldjQueryMethod = $.fn.bigtext,
+    BigText = {
+      DEBUG_MODE: false,
+      DEFAULT_MIN_FONT_SIZE_PX: null,
+      DEFAULT_MAX_FONT_SIZE_PX: 528,
+      GLOBAL_STYLE_ID: 'bigtext-style',
+      STYLE_ID: 'bigtext-id',
+      LINE_CLASS_PREFIX: 'bigtext-line',
+      EXEMPT_CLASS: 'bigtext-exempt',
+      noConflict: function(restore)
+      {
+        if(restore) {
+          $.fn.bigtext = oldjQueryMethod;
+          window.BigText = oldBigText;
+        }
+        return BigText;
+      },
+      supports: {
+        wholeNumberFontSizeOnly: (function() {
+          if( !( 'getComputedStyle' in window ) ) {
+            return true;
+          }
+          var test = $('<div/>').css({
+              position: 'absolute',
+              'font-size': '14.1px'
+            }).insertBefore( $('script').eq(0) ),
+            computedStyle = window.getComputedStyle( test[0], null );
+
+          var ret = computedStyle && computedStyle.getPropertyValue( 'font-size' ) === '14px';
+          test.remove();
+          return ret;
+        })()
+      },
+      init: function() {
+        if(!$('#'+BigText.GLOBAL_STYLE_ID).length) {
+          $headCache.append(BigText.generateStyleTag(BigText.GLOBAL_STYLE_ID, ['.bigtext * { white-space: nowrap; } .bigtext > * { display: block; }',
+                                          '.bigtext .' + BigText.EXEMPT_CLASS + ', .bigtext .' + BigText.EXEMPT_CLASS + ' * { white-space: normal; }']));
+        }
+      },
+      bindResize: function(eventName, resizeFunction) {
+        var timeoutId;
+        $(window).unbind(eventName).bind(eventName, function() {
+          if( timeoutId ) {
+            clearTimeout( timeoutId );
+          }
+          timeoutId = setTimeout( resizeFunction, 100 );
+        });
+      },
+      getStyleId: function(id)
+      {
+        return BigText.STYLE_ID + '-' + id;
+      },
+      generateStyleTag: function(id, css)
+      {
+        return $('<style>' + css.join('\n') + '</style>').attr('id', id);
+      },
+      clearCss: function(id)
+      {
+        var styleId = BigText.getStyleId(id);
+        $('#' + styleId).remove();
+      },
+      generateCss: function(id, linesFontSizes, lineWordSpacings, minFontSizes)
+      {
+        var css = [];
+
+        BigText.clearCss(id);
+
+        for(var j=0, k=linesFontSizes.length; j<k; j++) {
+          css.push('#' + id + ' .' + BigText.LINE_CLASS_PREFIX + j + ' {' +
+            (minFontSizes[j] ? ' white-space: normal;' : '') +
+            (linesFontSizes[j] ? ' font-size: ' + linesFontSizes[j] + 'px;' : '') +
+            (lineWordSpacings[j] ? ' word-spacing: ' + lineWordSpacings[j] + 'px;' : '') +
+            '}');
+        }
+
+        return BigText.generateStyleTag(BigText.getStyleId(id), css);
+      },
+      jQueryMethod: function(options)
+      {
+        BigText.init();
+
+        options = $.extend({
+          minfontsize: BigText.DEFAULT_MIN_FONT_SIZE_PX,
+          maxfontsize: BigText.DEFAULT_MAX_FONT_SIZE_PX,
+          childSelector: '',
+          resize: true
+        }, options || {});
+
+        this.each(function()
+        {
+          var $t = $(this).addClass('bigtext'),
+            maxWidth = $t.width(),
+            id = $t.attr('id'),
+            $children = options.childSelector ? $t.find( options.childSelector ) : $t.children();
+
+          if(!id) {
+            id = 'bigtext-id' + (counter++);
+            $t.attr('id', id);
+          }
+
+          if(options.resize) {
+            BigText.bindResize('resize.bigtext-event-' + id, function()
+            {
+              // TODO only call this if the width has changed.
+              BigText.jQueryMethod.call($('#' + id), options);
+            });
+          }
+
+          BigText.clearCss(id);
+
+          $children.addClass(function(lineNumber, className)
+          {
+            // remove existing line classes.
+            return [className.replace(new RegExp('\\b' + BigText.LINE_CLASS_PREFIX + '\\d+\\b'), ''),
+                BigText.LINE_CLASS_PREFIX + lineNumber].join(' ');
+          });
+
+          var sizes = calculateSizes($t, $children, maxWidth, options.maxfontsize, options.minfontsize);
+          $headCache.append(BigText.generateCss(id, sizes.fontSizes, sizes.wordSpacings, sizes.minFontSizes));
+        });
+
+        return this.trigger('bigtext:complete');
+      }
+    };
+
+  function testLineDimensions($line, maxWidth, property, size, interval, units, previousWidth)
+  {
+    var width;
+    previousWidth = typeof previousWidth === 'number' ? previousWidth : 0;
+    $line.css(property, size + units);
+
+    width = $line.width();
+
+    if(width >= maxWidth) {
+// console.log(width, ' previous: ' + previousWidth, property + ' at ' + interval, 'prior: ' + (parseFloat(size) - interval), 'new:' + parseFloat(size));
+      $line.css(property, '');
+
+      if(width === maxWidth) {
+        return {
+          match: 'exact',
+          size: parseFloat((parseFloat(size) - 0.1).toFixed(3))
+        };
+      }
+
+      // Since this is an estimate, we calculate how far over the width we went with the new value.
+      // If this is word-spacing (our last resort guess) and the over is less than the under, we keep the higher value.
+      // Otherwise, we revert to the underestimate.
+      var under = maxWidth - previousWidth,
+        over = width - maxWidth;
+
+      return {
+        match: 'estimate',
+        size: parseFloat((parseFloat(size) - (property === 'word-spacing' && previousWidth && ( over < under ) ? 0 : interval)).toFixed(3))
+      };
+    }
+
+    return width;
+  }
+
+  function calculateSizes($t, $children, maxWidth, maxFontSize, minFontSize)
+  {
+    var $c = $t.clone(true)
+      .addClass('bigtext-cloned')
+      .css({
+        fontFamily: $t.css('font-family'),
+        textTransform: $t.css('text-transform'),
+        wordSpacing: $t.css('word-spacing'),
+        letterSpacing: $t.css('letter-spacing'),
+        position: 'absolute',
+        left: BigText.DEBUG_MODE ? 0 : -9999,
+        top: BigText.DEBUG_MODE ? 0 : -9999
+      })
+      .appendTo(document.body);
+
+    // font-size isn't the only thing we can modify, we can also mess with:
+    // word-spacing and letter-spacing. WebKit does not respect subpixel
+    // letter-spacing, word-spacing, or font-size.
+    // TODO try -webkit-transform: scale() as a workaround.
+    var fontSizes = [],
+      wordSpacings = [],
+      minFontSizes = [],
+      ratios = [];
+
+    $children.css('float', 'left').each(function() {
+      var $line = $(this),
+        // TODO replace 8, 4 with a proportional size to the calculated font-size.
+        intervals = BigText.supports.wholeNumberFontSizeOnly ? [8, 4, 1] : [8, 4, 1, 0.1],
+        lineMax,
+        newFontSize;
+
+      if($line.hasClass(BigText.EXEMPT_CLASS)) {
+        fontSizes.push(null);
+        ratios.push(null);
+        minFontSizes.push(false);
+        return;
+      }
+
+      // TODO we can cache this ratio?
+      var autoGuessSubtraction = 32, // font size in px
+        currentFontSize = parseFloat($line.css('font-size')),
+        ratio = ( $line.width() / currentFontSize ).toFixed(6);
+
+      newFontSize = parseInt( maxWidth / ratio, 10 ) - autoGuessSubtraction;
+
+      outer: for(var m=0, n=intervals.length; m<n; m++) {
+        inner: for(var j=1, k=10; j<=k; j++) {
+          if(newFontSize + j*intervals[m] > maxFontSize) {
+            newFontSize = maxFontSize;
+            break outer;
+          }
+
+          lineMax = testLineDimensions($line, maxWidth, 'font-size', newFontSize + j*intervals[m], intervals[m], 'px', lineMax);
+          if(typeof lineMax !== 'number') {
+            newFontSize = lineMax.size;
+
+            if(lineMax.match === 'exact') {
+              break outer;
+            }
+            break inner;
+          }
+        }
+      }
+
+      ratios.push(maxWidth / newFontSize);
+
+      if(newFontSize > maxFontSize) {
+        fontSizes.push(maxFontSize);
+        minFontSizes.push(false);
+      } else if(!!minFontSize && newFontSize < minFontSize) {
+        fontSizes.push(minFontSize);
+        minFontSizes.push(true);
+      } else {
+        fontSizes.push(newFontSize);
+        minFontSizes.push(false);
+      }
+    }).each(function(lineNumber) {
+      var $line = $(this),
+        wordSpacing = 0,
+        interval = 1,
+        maxWordSpacing;
+
+      if($line.hasClass(BigText.EXEMPT_CLASS)) {
+        wordSpacings.push(null);
+        return;
+      }
+
+      // must re-use font-size, even though it was removed above.
+      $line.css('font-size', fontSizes[lineNumber] + 'px');
+
+      for(var m=1, n=3; m<n; m+=interval) {
+        maxWordSpacing = testLineDimensions($line, maxWidth, 'word-spacing', m, interval, 'px', maxWordSpacing);
+        if(typeof maxWordSpacing !== 'number') {
+          wordSpacing = maxWordSpacing.size;
+          break;
+        }
+      }
+
+      $line.css('font-size', '');
+      wordSpacings.push(wordSpacing);
+    }).removeAttr('style');
+
+    if( !BigText.DEBUG_MODE ) {
+      $c.remove();
+    } else {
+      $c.css({
+        'background-color': 'rgba(255,255,255,.4)'
+      });
+    }
+
+    return {
+      fontSizes: fontSizes,
+      wordSpacings: wordSpacings,
+      ratios: ratios,
+      minFontSizes: minFontSizes
+    };
+  }
+
+  $.fn.bigtext = BigText.jQueryMethod;
+  window.BigText = BigText;
+
+})(this, jQuery);
+
 !function(a){"function"==typeof define&&define.amd?define(["jquery"],a):"object"==typeof exports?a(require("jquery")):a(jQuery)}(function(a){function b(a){return h.raw?a:encodeURIComponent(a)}function c(a){return h.raw?a:decodeURIComponent(a)}function d(a){return b(h.json?JSON.stringify(a):String(a))}function e(a){0===a.indexOf('"')&&(a=a.slice(1,-1).replace(/\\"/g,'"').replace(/\\\\/g,"\\"));try{return a=decodeURIComponent(a.replace(g," ")),h.json?JSON.parse(a):a}catch(b){}}function f(b,c){var d=h.raw?b:e(b);return a.isFunction(c)?c(d):d}var g=/\+/g,h=a.cookie=function(e,g,i){if(void 0!==g&&!a.isFunction(g)){if(i=a.extend({},h.defaults,i),"number"==typeof i.expires){var j=i.expires,k=i.expires=new Date;k.setTime(+k+864e5*j)}return document.cookie=[b(e),"=",d(g),i.expires?"; expires="+i.expires.toUTCString():"",i.path?"; path="+i.path:"",i.domain?"; domain="+i.domain:"",i.secure?"; secure":""].join("")}for(var l=e?void 0:{},m=document.cookie?document.cookie.split("; "):[],n=0,o=m.length;o>n;n++){var p=m[n].split("="),q=c(p.shift()),r=p.join("=");if(e&&e===q){l=f(r,g);break}e||void 0===(r=f(r))||(l[q]=r)}return l};h.defaults={},a.removeCookie=function(b,c){return void 0===a.cookie(b)?!1:(a.cookie(b,"",a.extend({},c,{expires:-1})),!a.cookie(b))}});
+
+/*global jQuery */
+/*!
+* FitText.js 1.2
+*
+* Copyright 2011, Dave Rupert http://daverupert.com
+* Released under the WTFPL license
+* http://sam.zoy.org/wtfpl/
+*
+* Date: Thu May 05 14:23:00 2011 -0600
+*/
+
+(function( $ ){
+
+  $.fn.fitText = function( kompressor, options ) {
+
+    // Setup options
+    var compressor = kompressor || 1,
+        settings = $.extend({
+          'minFontSize' : Number.NEGATIVE_INFINITY,
+          'maxFontSize' : Number.POSITIVE_INFINITY
+        }, options);
+
+    return this.each(function(){
+
+      // Store the object
+      var $this = $(this);
+
+      // Resizer() resizes items based on the object width divided by the compressor * 10
+      var resizer = function () {
+        $this.css('font-size', Math.max(Math.min($this.width() / (compressor*10), parseFloat(settings.maxFontSize)), parseFloat(settings.minFontSize)));
+      };
+
+      // Call once to set.
+      resizer();
+
+      // Call on resize. Opera debounces their resize by default.
+      $(window).on('resize.fittext orientationchange.fittext', resizer);
+
+    });
+
+  };
+
+})( jQuery );
