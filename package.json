@@ -32,6 +32,8 @@
     "uglifyify": "^2.6.0"
   },
   "dependencies": {
-    "superstatic": "^2.0.0-rc4"
+    "mocha": "^2.2.1",
+    "superstatic": "^2.0.0-rc4",
+    "supertest": "^0.15.0"
   }
 }

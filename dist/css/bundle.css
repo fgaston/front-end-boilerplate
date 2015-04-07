@@ -1,4 +1,4 @@
-input:focus{outline:0}#main-region{padding-top:90px}nav,nav a{transition:all .15s ease-in-out}.btn:focus:active:hover,select:focus:hover:active{outline:0!important}@charset "UTF-8";/*!
+input:focus{outline:0}#main-region{padding-top:90px}nav,nav a{transition:all .15s ease-in-out}.btn:focus:active:hover,select:focus:hover:active{outline:0!important}[data-class=test]:HOVER~*{background-color:#000}@charset "UTF-8";/*!
 Animate.css - http://daneden.me/animate
 Licensed under the MIT license - http://opensource.org/licenses/MIT
 

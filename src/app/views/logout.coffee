@@ -1,2 +1,4 @@
-module.exports = Marionette.ItemView.extend
+class View extends Marionette.ItemView
   template: require 'templates/logout.hbs'
+
+module.exports = View

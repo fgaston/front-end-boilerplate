@@ -9,3 +9,7 @@ nav, nav a {
 .btn:focus:active:hover, select:focus:hover:active {
   outline: none !important;
 }
+
+[data-class="test"]:HOVER ~ * {
+  background-color: #000;
+}

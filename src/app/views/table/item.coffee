@@ -1,4 +1,4 @@
-module.exports = Marionette.ItemView.extend
+class View extends Marionette.ItemView
   template: require 'templates/table/item.hbs'
   tagName: 'tr'
   className: 'animated fadeIn'
@@ -6,3 +6,5 @@ module.exports = Marionette.ItemView.extend
     'click .delete-item': 'deleteItem'
   deleteItem: ->
     @model.destroy()
+
+module.exports = View

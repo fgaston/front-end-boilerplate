@@ -1,4 +1,4 @@
-module.exports = Marionette.CollectionView.extend
+class CollectionView extends Marionette.CollectionView
   childView: require 'views/list/item.coffee'
   emptyView: require 'views/list/empty.coffee'
   tagName: 'ul'
@@ -14,3 +14,5 @@ module.exports = Marionette.CollectionView.extend
   onDestroy: ->
     if @interval
       clearInterval @interval
+
+module.exports = CollectionView
