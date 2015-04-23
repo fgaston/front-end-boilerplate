@@ -1,5 +1,11 @@
 Handlebars = require 'hbsfy/runtime'
 
+# shuffle in swag
+require './swag.js'
+for helperName, helperFunction of Swag.helpers
+  Handlebars.registerHelper helperName, helperFunction
+
+# custom helpers
 Handlebars.registerHelper 'grid', (str) ->
   if !isNaN str
     returnValue = ['col-xs-'+str, 'col-sm-'+str, 'col-md-'+str, 'col-lg-'+str]
@@ -12,3 +18,4 @@ Handlebars.registerHelper 'grid', (str) ->
       'col-lg-'+splittr[3]
     ]
   return returnValue.join ' '
+
