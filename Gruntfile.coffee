@@ -20,7 +20,7 @@ module.exports = (grunt) ->
         options: 
           livereload: true
       hbsfy:
-        files: 'src/app/templates/**/*.hbs'
+        files: 'src/app/**/*.hbs'
         tasks: 'browserify:clean'
       buildjs:
         files: 'src/app/**/*.coffee'
