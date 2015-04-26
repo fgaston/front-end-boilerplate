@@ -7,9 +7,7 @@ class Router extends Marionette.AppRouter
     'list':   'list'
     'logout': 'logout'
     'table':  'table'
-  initialize: ->
-    @listenTo @, 'route', ->
-      _.defer ->
-        Components.setActiveLinks Backbone.history.location.pathname
+  onRoute: (a, b) ->
+    console.log(a, b)
 
 module.exports = Router
