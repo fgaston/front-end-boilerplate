@@ -1,1 +1,1 @@
-require 'modules/form/index.coffee'
+require './main/index.coffee'
