@@ -17,7 +17,8 @@ App = new Marionette.Application
     Backbone.history.start
       pushState: true
     @layout = new Layout
-    App.module('demo').start()
+    App.channel.commands.execute 'module:demo:start',
+      region: @layout.getRegion('dialogs')
 
 window.App = App
 

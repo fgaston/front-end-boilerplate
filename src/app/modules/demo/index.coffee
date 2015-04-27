@@ -2,11 +2,22 @@ TestModal = require './views/modal.coffee'
 
 class Demo extends Marionette.Module
   startWithParent: false
-  onStart: ->
+  initialize: (moduleName, app) ->
+    commands = App.channel.commands
+
+    commands.setHandler 'module:' + moduleName + ':start', (options) =>
+      @start options
+
+    commands.setHandler 'module:' + moduleName + ':stop', (options) =>
+      @stop options
+
+  onStart: (options) ->
+    @region = options.region
     @view = new TestModal
-    App.layout.getRegion('dialogs').show @view
+    @region.show @view
   onStop: ->
     @view.destroy()
-    @start()
+    App.channel.commands.execute 'module:demo:start',
+      region: @region
 
 App.module 'demo', Demo

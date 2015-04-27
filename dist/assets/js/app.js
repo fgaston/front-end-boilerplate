@@ -1,1 +1,912 @@
-!function a(b,c,d){function e(g,h){if(!c[g]){if(!b[g]){var i="function"==typeof require&&require;if(!h&&i)return i(g,!0);if(f)return f(g,!0);var j=new Error("Cannot find module '"+g+"'");throw j.code="MODULE_NOT_FOUND",j}var k=c[g]={exports:{}};b[g][0].call(k.exports,function(a){var c=b[g][1][a];return e(c?c:a)},k,k.exports,a,b,c,d)}return c[g].exports}for(var f="function"==typeof require&&require,g=0;g<d.length;g++)e(d[g]);return e}({1:[function(a,b,c){(function(d){"use strict";function e(){var a=new h.HandlebarsEnvironment;return n.extend(a,h),a.SafeString=j["default"],a.Exception=l["default"],a.Utils=n,a.escapeExpression=n.escapeExpression,a.VM=p,a.template=function(b){return p.template(b,a)},a}var f=function(a){return a&&a.__esModule?a:{"default":a}};c.__esModule=!0;var g=a("./handlebars/base"),h=f(g),i=a("./handlebars/safe-string"),j=f(i),k=a("./handlebars/exception"),l=f(k),m=a("./handlebars/utils"),n=f(m),o=a("./handlebars/runtime"),p=f(o),q=e();q.create=e;var r="undefined"!=typeof d?d:window,s=r.Handlebars;q.noConflict=function(){r.Handlebars===q&&(r.Handlebars=s)},q["default"]=q,c["default"]=q,b.exports=c["default"]}).call(this,"undefined"!=typeof global?global:"undefined"!=typeof self?self:"undefined"!=typeof window?window:{})},{"./handlebars/base":2,"./handlebars/exception":3,"./handlebars/runtime":4,"./handlebars/safe-string":5,"./handlebars/utils":6}],2:[function(a,b,c){"use strict";function d(a,b){this.helpers=a||{},this.partials=b||{},e(this)}function e(a){a.registerHelper("helperMissing",function(){if(1===arguments.length)return void 0;throw new k["default"]('Missing helper: "'+arguments[arguments.length-1].name+'"')}),a.registerHelper("blockHelperMissing",function(b,c){var d=c.inverse,e=c.fn;if(b===!0)return e(this);if(b===!1||null==b)return d(this);if(o(b))return b.length>0?(c.ids&&(c.ids=[c.name]),a.helpers.each(b,c)):d(this);if(c.data&&c.ids){var g=f(c.data);g.contextPath=i.appendContextPath(c.data.contextPath,c.name),c={data:g}}return e(b,c)}),a.registerHelper("each",function(a,b){function c(b,c,e){j&&(j.key=b,j.index=c,j.first=0===c,j.last=!!e,l&&(j.contextPath=l+b)),h+=d(a[b],{data:j,blockParams:i.blockParams([a[b],b],[l+b,null])})}if(!b)throw new k["default"]("Must pass iterator to #each");var d=b.fn,e=b.inverse,g=0,h="",j=void 0,l=void 0;if(b.data&&b.ids&&(l=i.appendContextPath(b.data.contextPath,b.ids[0])+"."),p(a)&&(a=a.call(this)),b.data&&(j=f(b.data)),a&&"object"==typeof a)if(o(a))for(var m=a.length;m>g;g++)c(g,g,g===a.length-1);else{var n=void 0;for(var q in a)a.hasOwnProperty(q)&&(n&&c(n,g-1),n=q,g++);n&&c(n,g-1,!0)}return 0===g&&(h=e(this)),h}),a.registerHelper("if",function(a,b){return p(a)&&(a=a.call(this)),!b.hash.includeZero&&!a||i.isEmpty(a)?b.inverse(this):b.fn(this)}),a.registerHelper("unless",function(b,c){return a.helpers["if"].call(this,b,{fn:c.inverse,inverse:c.fn,hash:c.hash})}),a.registerHelper("with",function(a,b){p(a)&&(a=a.call(this));var c=b.fn;if(i.isEmpty(a))return b.inverse(this);if(b.data&&b.ids){var d=f(b.data);d.contextPath=i.appendContextPath(b.data.contextPath,b.ids[0]),b={data:d}}return c(a,b)}),a.registerHelper("log",function(b,c){var d=c.data&&null!=c.data.level?parseInt(c.data.level,10):1;a.log(d,b)}),a.registerHelper("lookup",function(a,b){return a&&a[b]})}function f(a){var b=i.extend({},a);return b._parent=a,b}var g=function(a){return a&&a.__esModule?a:{"default":a}};c.__esModule=!0,c.HandlebarsEnvironment=d,c.createFrame=f;var h=a("./utils"),i=g(h),j=a("./exception"),k=g(j),l="3.0.1";c.VERSION=l;var m=6;c.COMPILER_REVISION=m;var n={1:"<= 1.0.rc.2",2:"== 1.0.0-rc.3",3:"== 1.0.0-rc.4",4:"== 1.x.x",5:"== 2.0.0-alpha.x",6:">= 2.0.0-beta.1"};c.REVISION_CHANGES=n;var o=i.isArray,p=i.isFunction,q=i.toString,r="[object Object]";d.prototype={constructor:d,logger:s,log:t,registerHelper:function(a,b){if(q.call(a)===r){if(b)throw new k["default"]("Arg not supported with multiple helpers");i.extend(this.helpers,a)}else this.helpers[a]=b},unregisterHelper:function(a){delete this.helpers[a]},registerPartial:function(a,b){if(q.call(a)===r)i.extend(this.partials,a);else{if("undefined"==typeof b)throw new k["default"]("Attempting to register a partial as undefined");this.partials[a]=b}},unregisterPartial:function(a){delete this.partials[a]}};var s={methodMap:{0:"debug",1:"info",2:"warn",3:"error"},DEBUG:0,INFO:1,WARN:2,ERROR:3,level:1,log:function(a,b){if("undefined"!=typeof console&&s.level<=a){var c=s.methodMap[a];(console[c]||console.log).call(console,b)}}};c.logger=s;var t=s.log;c.log=t},{"./exception":3,"./utils":6}],3:[function(a,b,c){"use strict";function d(a,b){var c=b&&b.loc,f=void 0,g=void 0;c&&(f=c.start.line,g=c.start.column,a+=" - "+f+":"+g);for(var h=Error.prototype.constructor.call(this,a),i=0;i<e.length;i++)this[e[i]]=h[e[i]];Error.captureStackTrace&&Error.captureStackTrace(this,d),c&&(this.lineNumber=f,this.column=g)}c.__esModule=!0;var e=["description","fileName","lineNumber","message","name","number","stack"];d.prototype=new Error,c["default"]=d,b.exports=c["default"]},{}],4:[function(a,b,c){"use strict";function d(a){var b=a&&a[0]||1,c=p.COMPILER_REVISION;if(b!==c){if(c>b){var d=p.REVISION_CHANGES[c],e=p.REVISION_CHANGES[b];throw new o["default"]("Template was precompiled with an older version of Handlebars than the current runtime. Please update your precompiler to a newer version ("+d+") or downgrade your runtime to an older version ("+e+").")}throw new o["default"]("Template was precompiled with a newer version of Handlebars than the current runtime. Please update your runtime to a newer version ("+a[1]+").")}}function e(a,b){function c(c,d,e){e.hash&&(d=m.extend({},d,e.hash)),c=b.VM.resolvePartial.call(this,c,d,e);var f=b.VM.invokePartial.call(this,c,d,e);if(null==f&&b.compile&&(e.partials[e.name]=b.compile(c,a.compilerOptions,b),f=e.partials[e.name](d,e)),null!=f){if(e.indent){for(var g=f.split("\n"),h=0,i=g.length;i>h&&(g[h]||h+1!==i);h++)g[h]=e.indent+g[h];f=g.join("\n")}return f}throw new o["default"]("The partial "+e.name+" could not be compiled when running in runtime-only mode")}function d(b){var c=void 0===arguments[1]?{}:arguments[1],f=c.data;d._setup(c),!c.partial&&a.useData&&(f=j(b,f));var g=void 0,h=a.useBlockParams?[]:void 0;return a.useDepths&&(g=c.depths?[b].concat(c.depths):[b]),a.main.call(e,b,e.helpers,e.partials,f,h,g)}if(!b)throw new o["default"]("No environment passed to template");if(!a||!a.main)throw new o["default"]("Unknown template object: "+typeof a);b.VM.checkRevision(a.compiler);var e={strict:function(a,b){if(!(b in a))throw new o["default"]('"'+b+'" not defined in '+a);return a[b]},lookup:function(a,b){for(var c=a.length,d=0;c>d;d++)if(a[d]&&null!=a[d][b])return a[d][b]},lambda:function(a,b){return"function"==typeof a?a.call(b):a},escapeExpression:m.escapeExpression,invokePartial:c,fn:function(b){return a[b]},programs:[],program:function(a,b,c,d,e){var g=this.programs[a],h=this.fn(a);return b||e||d||c?g=f(this,a,h,b,c,d,e):g||(g=this.programs[a]=f(this,a,h)),g},data:function(a,b){for(;a&&b--;)a=a._parent;return a},merge:function(a,b){var c=a||b;return a&&b&&a!==b&&(c=m.extend({},b,a)),c},noop:b.VM.noop,compilerInfo:a.compiler};return d.isTop=!0,d._setup=function(c){c.partial?(e.helpers=c.helpers,e.partials=c.partials):(e.helpers=e.merge(c.helpers,b.helpers),a.usePartial&&(e.partials=e.merge(c.partials,b.partials)))},d._child=function(b,c,d,g){if(a.useBlockParams&&!d)throw new o["default"]("must pass block params");if(a.useDepths&&!g)throw new o["default"]("must pass parent depths");return f(e,b,a[b],c,0,d,g)},d}function f(a,b,c,d,e,f,g){function h(b){var e=void 0===arguments[1]?{}:arguments[1];return c.call(a,b,a.helpers,a.partials,e.data||d,f&&[e.blockParams].concat(f),g&&[b].concat(g))}return h.program=b,h.depth=g?g.length:0,h.blockParams=e||0,h}function g(a,b,c){return a?a.call||c.name||(c.name=a,a=c.partials[a]):a=c.partials[c.name],a}function h(a,b,c){if(c.partial=!0,void 0===a)throw new o["default"]("The partial "+c.name+" could not be found");return a instanceof Function?a(b,c):void 0}function i(){return""}function j(a,b){return b&&"root"in b||(b=b?p.createFrame(b):{},b.root=a),b}var k=function(a){return a&&a.__esModule?a:{"default":a}};c.__esModule=!0,c.checkRevision=d,c.template=e,c.wrapProgram=f,c.resolvePartial=g,c.invokePartial=h,c.noop=i;var l=a("./utils"),m=k(l),n=a("./exception"),o=k(n),p=a("./base")},{"./base":2,"./exception":3,"./utils":6}],5:[function(a,b,c){"use strict";function d(a){this.string=a}c.__esModule=!0,d.prototype.toString=d.prototype.toHTML=function(){return""+this.string},c["default"]=d,b.exports=c["default"]},{}],6:[function(a,b,c){"use strict";function d(a){return k[a]}function e(a){for(var b=1;b<arguments.length;b++)for(var c in arguments[b])Object.prototype.hasOwnProperty.call(arguments[b],c)&&(a[c]=arguments[b][c]);return a}function f(a,b){for(var c=0,d=a.length;d>c;c++)if(a[c]===b)return c;return-1}function g(a){if("string"!=typeof a){if(a&&a.toHTML)return a.toHTML();if(null==a)return"";if(!a)return a+"";a=""+a}return m.test(a)?a.replace(l,d):a}function h(a){return a||0===a?p(a)&&0===a.length?!0:!1:!0}function i(a,b){return a.path=b,a}function j(a,b){return(a?a+".":"")+b}c.__esModule=!0,c.extend=e,c.indexOf=f,c.escapeExpression=g,c.isEmpty=h,c.blockParams=i,c.appendContextPath=j;var k={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#x27;","`":"&#x60;"},l=/[&<>"'`]/g,m=/[&<>"'`]/,n=Object.prototype.toString;c.toString=n;var o=function(a){return"function"==typeof a};o(/x/)&&(c.isFunction=o=function(a){return"function"==typeof a&&"[object Function]"===n.call(a)});var o;c.isFunction=o;var p=Array.isArray||function(a){return a&&"object"==typeof a?"[object Array]"===n.call(a):!1};c.isArray=p},{}],7:[function(a,b,c){b.exports=a("./dist/cjs/handlebars.runtime")["default"]},{"./dist/cjs/handlebars.runtime":1}],8:[function(a,b,c){b.exports=a("handlebars/runtime")["default"]},{"handlebars/runtime":7}],9:[function(a,b,c){var d,e,f=function(a,b){function c(){this.constructor=a}for(var d in b)g.call(b,d)&&(a[d]=b[d]);return c.prototype=b.prototype,a.prototype=new c,a.__super__=b.prototype,a},g={}.hasOwnProperty;e=function(b){function c(){return c.__super__.constructor.apply(this,arguments)}return f(c,b),c.prototype.template=a("./layout.hbs"),c.prototype.tagName="main",c.prototype.el="body",c.prototype.initialize=function(){return this.render()},c.prototype.regions={main:"main",dialogs:"dialogs"},c}(Marionette.LayoutView),d=new Marionette.Application({initialize:function(){return this.debug=new Debugger(this,"Main App").debug},onStart:function(){return this.debug("starting"),Backbone.Intercept.start(),Backbone.history.start({pushState:!0}),this.layout=new e,d.module("demo").start()}}),window.App=d,a("./modules/index.coffee"),d.start()},{"./layout.hbs":10,"./modules/index.coffee":14}],10:[function(a,b,c){var d=a("hbsfy/runtime");b.exports=d.template({compiler:[6,">= 2.0.0-beta.1"],main:function(a,b,c,d){return"<main></main>\n<dialogs></dialogs>"},useData:!0})},{"hbsfy/runtime":8}],11:[function(a,b,c){var d,e,f=function(a,b){function c(){this.constructor=a}for(var d in b)g.call(b,d)&&(a[d]=b[d]);return c.prototype=b.prototype,a.prototype=new c,a.__super__=b.prototype,a},g={}.hasOwnProperty;e=a("./views/modal.coffee"),d=function(a){function b(){return b.__super__.constructor.apply(this,arguments)}return f(b,a),b.prototype.startWithParent=!1,b.prototype.onStart=function(){return this.view=new e,App.layout.getRegion("dialogs").show(this.view)},b.prototype.onStop=function(){return this.view.destroy(),this.start()},b}(Marionette.Module),App.module("demo",d)},{"./views/modal.coffee":12}],12:[function(a,b,c){var d,e=function(a,b){function c(){this.constructor=a}for(var d in b)f.call(b,d)&&(a[d]=b[d]);return c.prototype=b.prototype,a.prototype=new c,a.__super__=b.prototype,a},f={}.hasOwnProperty;d=function(b){function c(){return c.__super__.constructor.apply(this,arguments)}return e(c,b),c.prototype.template=a("./modal.hbs"),c.prototype.keyControl=!1,c.prototype.events={"click .destroy":function(){return App.module("demo").stop()}},c}(Backbone.Modal),b.exports=d},{"./modal.hbs":13}],13:[function(a,b,c){var d=a("hbsfy/runtime");b.exports=d.template({compiler:[6,">= 2.0.0-beta.1"],main:function(a,b,c,d){return'<div class="bbm-modal__topbar">\n  <h3 class="bbm-modal__title">\n    Congratulations\n    <i class="fa fa-times pull-right destroy red pointer"></i>\n  </h3>\n</div>\n<div class="bbm-modal__section">\n  <center>\n    <i class="fa fa-thumbs-o-up fa-3x"></i>\n    <p class="m-t-20">You\'ve successfully installed and booted up the<br />Front-End Boilerplate.</p>\n  </center>\n  <p class="m-t-20"><small>You are looking at a demonstration module, you can keep it from starting it in line 9 of <u>src/app/index.coffee</u></small></p>\n</div>\n<div class="bbm-modal__bottombar">\n  <button class="btn btn-danger destroy pull-left"><i class="fa fa-fw fa-times"></i> close</button>\n  <button class="btn btn-success destroy"><i class="fa fa-fw fa-check"></i> confirm</button>\n</div>'},useData:!0})},{"hbsfy/runtime":8}],14:[function(a,b,c){a("./demo/index.coffee")},{"./demo/index.coffee":11}]},{},[9]);
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function (global){
+'use strict';
+
+var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
+
+exports.__esModule = true;
+/*global window */
+
+var _import = require('./handlebars/base');
+
+var base = _interopRequireWildcard(_import);
+
+// Each of these augment the Handlebars object. No need to setup here.
+// (This is done to easily share code between commonjs and browse envs)
+
+var _SafeString = require('./handlebars/safe-string');
+
+var _SafeString2 = _interopRequireWildcard(_SafeString);
+
+var _Exception = require('./handlebars/exception');
+
+var _Exception2 = _interopRequireWildcard(_Exception);
+
+var _import2 = require('./handlebars/utils');
+
+var Utils = _interopRequireWildcard(_import2);
+
+var _import3 = require('./handlebars/runtime');
+
+var runtime = _interopRequireWildcard(_import3);
+
+// For compatibility and usage outside of module systems, make the Handlebars object a namespace
+function create() {
+  var hb = new base.HandlebarsEnvironment();
+
+  Utils.extend(hb, base);
+  hb.SafeString = _SafeString2['default'];
+  hb.Exception = _Exception2['default'];
+  hb.Utils = Utils;
+  hb.escapeExpression = Utils.escapeExpression;
+
+  hb.VM = runtime;
+  hb.template = function (spec) {
+    return runtime.template(spec, hb);
+  };
+
+  return hb;
+}
+
+var Handlebars = create();
+Handlebars.create = create;
+
+/*jshint -W040 */
+/* istanbul ignore next */
+var root = typeof global !== 'undefined' ? global : window,
+    $Handlebars = root.Handlebars;
+/* istanbul ignore next */
+Handlebars.noConflict = function () {
+  if (root.Handlebars === Handlebars) {
+    root.Handlebars = $Handlebars;
+  }
+};
+
+Handlebars['default'] = Handlebars;
+
+exports['default'] = Handlebars;
+module.exports = exports['default'];
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"./handlebars/base":2,"./handlebars/exception":3,"./handlebars/runtime":4,"./handlebars/safe-string":5,"./handlebars/utils":6}],2:[function(require,module,exports){
+'use strict';
+
+var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
+
+exports.__esModule = true;
+exports.HandlebarsEnvironment = HandlebarsEnvironment;
+exports.createFrame = createFrame;
+
+var _import = require('./utils');
+
+var Utils = _interopRequireWildcard(_import);
+
+var _Exception = require('./exception');
+
+var _Exception2 = _interopRequireWildcard(_Exception);
+
+var VERSION = '3.0.1';
+exports.VERSION = VERSION;
+var COMPILER_REVISION = 6;
+
+exports.COMPILER_REVISION = COMPILER_REVISION;
+var REVISION_CHANGES = {
+  1: '<= 1.0.rc.2', // 1.0.rc.2 is actually rev2 but doesn't report it
+  2: '== 1.0.0-rc.3',
+  3: '== 1.0.0-rc.4',
+  4: '== 1.x.x',
+  5: '== 2.0.0-alpha.x',
+  6: '>= 2.0.0-beta.1'
+};
+
+exports.REVISION_CHANGES = REVISION_CHANGES;
+var isArray = Utils.isArray,
+    isFunction = Utils.isFunction,
+    toString = Utils.toString,
+    objectType = '[object Object]';
+
+function HandlebarsEnvironment(helpers, partials) {
+  this.helpers = helpers || {};
+  this.partials = partials || {};
+
+  registerDefaultHelpers(this);
+}
+
+HandlebarsEnvironment.prototype = {
+  constructor: HandlebarsEnvironment,
+
+  logger: logger,
+  log: log,
+
+  registerHelper: function registerHelper(name, fn) {
+    if (toString.call(name) === objectType) {
+      if (fn) {
+        throw new _Exception2['default']('Arg not supported with multiple helpers');
+      }
+      Utils.extend(this.helpers, name);
+    } else {
+      this.helpers[name] = fn;
+    }
+  },
+  unregisterHelper: function unregisterHelper(name) {
+    delete this.helpers[name];
+  },
+
+  registerPartial: function registerPartial(name, partial) {
+    if (toString.call(name) === objectType) {
+      Utils.extend(this.partials, name);
+    } else {
+      if (typeof partial === 'undefined') {
+        throw new _Exception2['default']('Attempting to register a partial as undefined');
+      }
+      this.partials[name] = partial;
+    }
+  },
+  unregisterPartial: function unregisterPartial(name) {
+    delete this.partials[name];
+  }
+};
+
+function registerDefaultHelpers(instance) {
+  instance.registerHelper('helperMissing', function () {
+    if (arguments.length === 1) {
+      // A missing field in a {{foo}} constuct.
+      return undefined;
+    } else {
+      // Someone is actually trying to call something, blow up.
+      throw new _Exception2['default']('Missing helper: "' + arguments[arguments.length - 1].name + '"');
+    }
+  });
+
+  instance.registerHelper('blockHelperMissing', function (context, options) {
+    var inverse = options.inverse,
+        fn = options.fn;
+
+    if (context === true) {
+      return fn(this);
+    } else if (context === false || context == null) {
+      return inverse(this);
+    } else if (isArray(context)) {
+      if (context.length > 0) {
+        if (options.ids) {
+          options.ids = [options.name];
+        }
+
+        return instance.helpers.each(context, options);
+      } else {
+        return inverse(this);
+      }
+    } else {
+      if (options.data && options.ids) {
+        var data = createFrame(options.data);
+        data.contextPath = Utils.appendContextPath(options.data.contextPath, options.name);
+        options = { data: data };
+      }
+
+      return fn(context, options);
+    }
+  });
+
+  instance.registerHelper('each', function (context, options) {
+    if (!options) {
+      throw new _Exception2['default']('Must pass iterator to #each');
+    }
+
+    var fn = options.fn,
+        inverse = options.inverse,
+        i = 0,
+        ret = '',
+        data = undefined,
+        contextPath = undefined;
+
+    if (options.data && options.ids) {
+      contextPath = Utils.appendContextPath(options.data.contextPath, options.ids[0]) + '.';
+    }
+
+    if (isFunction(context)) {
+      context = context.call(this);
+    }
+
+    if (options.data) {
+      data = createFrame(options.data);
+    }
+
+    function execIteration(field, index, last) {
+      if (data) {
+        data.key = field;
+        data.index = index;
+        data.first = index === 0;
+        data.last = !!last;
+
+        if (contextPath) {
+          data.contextPath = contextPath + field;
+        }
+      }
+
+      ret = ret + fn(context[field], {
+        data: data,
+        blockParams: Utils.blockParams([context[field], field], [contextPath + field, null])
+      });
+    }
+
+    if (context && typeof context === 'object') {
+      if (isArray(context)) {
+        for (var j = context.length; i < j; i++) {
+          execIteration(i, i, i === context.length - 1);
+        }
+      } else {
+        var priorKey = undefined;
+
+        for (var key in context) {
+          if (context.hasOwnProperty(key)) {
+            // We're running the iterations one step out of sync so we can detect
+            // the last iteration without have to scan the object twice and create
+            // an itermediate keys array.
+            if (priorKey) {
+              execIteration(priorKey, i - 1);
+            }
+            priorKey = key;
+            i++;
+          }
+        }
+        if (priorKey) {
+          execIteration(priorKey, i - 1, true);
+        }
+      }
+    }
+
+    if (i === 0) {
+      ret = inverse(this);
+    }
+
+    return ret;
+  });
+
+  instance.registerHelper('if', function (conditional, options) {
+    if (isFunction(conditional)) {
+      conditional = conditional.call(this);
+    }
+
+    // Default behavior is to render the positive path if the value is truthy and not empty.
+    // The `includeZero` option may be set to treat the condtional as purely not empty based on the
+    // behavior of isEmpty. Effectively this determines if 0 is handled by the positive path or negative.
+    if (!options.hash.includeZero && !conditional || Utils.isEmpty(conditional)) {
+      return options.inverse(this);
+    } else {
+      return options.fn(this);
+    }
+  });
+
+  instance.registerHelper('unless', function (conditional, options) {
+    return instance.helpers['if'].call(this, conditional, { fn: options.inverse, inverse: options.fn, hash: options.hash });
+  });
+
+  instance.registerHelper('with', function (context, options) {
+    if (isFunction(context)) {
+      context = context.call(this);
+    }
+
+    var fn = options.fn;
+
+    if (!Utils.isEmpty(context)) {
+      if (options.data && options.ids) {
+        var data = createFrame(options.data);
+        data.contextPath = Utils.appendContextPath(options.data.contextPath, options.ids[0]);
+        options = { data: data };
+      }
+
+      return fn(context, options);
+    } else {
+      return options.inverse(this);
+    }
+  });
+
+  instance.registerHelper('log', function (message, options) {
+    var level = options.data && options.data.level != null ? parseInt(options.data.level, 10) : 1;
+    instance.log(level, message);
+  });
+
+  instance.registerHelper('lookup', function (obj, field) {
+    return obj && obj[field];
+  });
+}
+
+var logger = {
+  methodMap: { 0: 'debug', 1: 'info', 2: 'warn', 3: 'error' },
+
+  // State enum
+  DEBUG: 0,
+  INFO: 1,
+  WARN: 2,
+  ERROR: 3,
+  level: 1,
+
+  // Can be overridden in the host environment
+  log: function log(level, message) {
+    if (typeof console !== 'undefined' && logger.level <= level) {
+      var method = logger.methodMap[level];
+      (console[method] || console.log).call(console, message); // eslint-disable-line no-console
+    }
+  }
+};
+
+exports.logger = logger;
+var log = logger.log;
+
+exports.log = log;
+
+function createFrame(object) {
+  var frame = Utils.extend({}, object);
+  frame._parent = object;
+  return frame;
+}
+
+/* [args, ]options */
+},{"./exception":3,"./utils":6}],3:[function(require,module,exports){
+'use strict';
+
+exports.__esModule = true;
+
+var errorProps = ['description', 'fileName', 'lineNumber', 'message', 'name', 'number', 'stack'];
+
+function Exception(message, node) {
+  var loc = node && node.loc,
+      line = undefined,
+      column = undefined;
+  if (loc) {
+    line = loc.start.line;
+    column = loc.start.column;
+
+    message += ' - ' + line + ':' + column;
+  }
+
+  var tmp = Error.prototype.constructor.call(this, message);
+
+  // Unfortunately errors are not enumerable in Chrome (at least), so `for prop in tmp` doesn't work.
+  for (var idx = 0; idx < errorProps.length; idx++) {
+    this[errorProps[idx]] = tmp[errorProps[idx]];
+  }
+
+  if (Error.captureStackTrace) {
+    Error.captureStackTrace(this, Exception);
+  }
+
+  if (loc) {
+    this.lineNumber = line;
+    this.column = column;
+  }
+}
+
+Exception.prototype = new Error();
+
+exports['default'] = Exception;
+module.exports = exports['default'];
+},{}],4:[function(require,module,exports){
+'use strict';
+
+var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
+
+exports.__esModule = true;
+exports.checkRevision = checkRevision;
+
+// TODO: Remove this line and break up compilePartial
+
+exports.template = template;
+exports.wrapProgram = wrapProgram;
+exports.resolvePartial = resolvePartial;
+exports.invokePartial = invokePartial;
+exports.noop = noop;
+
+var _import = require('./utils');
+
+var Utils = _interopRequireWildcard(_import);
+
+var _Exception = require('./exception');
+
+var _Exception2 = _interopRequireWildcard(_Exception);
+
+var _COMPILER_REVISION$REVISION_CHANGES$createFrame = require('./base');
+
+function checkRevision(compilerInfo) {
+  var compilerRevision = compilerInfo && compilerInfo[0] || 1,
+      currentRevision = _COMPILER_REVISION$REVISION_CHANGES$createFrame.COMPILER_REVISION;
+
+  if (compilerRevision !== currentRevision) {
+    if (compilerRevision < currentRevision) {
+      var runtimeVersions = _COMPILER_REVISION$REVISION_CHANGES$createFrame.REVISION_CHANGES[currentRevision],
+          compilerVersions = _COMPILER_REVISION$REVISION_CHANGES$createFrame.REVISION_CHANGES[compilerRevision];
+      throw new _Exception2['default']('Template was precompiled with an older version of Handlebars than the current runtime. ' + 'Please update your precompiler to a newer version (' + runtimeVersions + ') or downgrade your runtime to an older version (' + compilerVersions + ').');
+    } else {
+      // Use the embedded version info since the runtime doesn't know about this revision yet
+      throw new _Exception2['default']('Template was precompiled with a newer version of Handlebars than the current runtime. ' + 'Please update your runtime to a newer version (' + compilerInfo[1] + ').');
+    }
+  }
+}
+
+function template(templateSpec, env) {
+  /* istanbul ignore next */
+  if (!env) {
+    throw new _Exception2['default']('No environment passed to template');
+  }
+  if (!templateSpec || !templateSpec.main) {
+    throw new _Exception2['default']('Unknown template object: ' + typeof templateSpec);
+  }
+
+  // Note: Using env.VM references rather than local var references throughout this section to allow
+  // for external users to override these as psuedo-supported APIs.
+  env.VM.checkRevision(templateSpec.compiler);
+
+  function invokePartialWrapper(partial, context, options) {
+    if (options.hash) {
+      context = Utils.extend({}, context, options.hash);
+    }
+
+    partial = env.VM.resolvePartial.call(this, partial, context, options);
+    var result = env.VM.invokePartial.call(this, partial, context, options);
+
+    if (result == null && env.compile) {
+      options.partials[options.name] = env.compile(partial, templateSpec.compilerOptions, env);
+      result = options.partials[options.name](context, options);
+    }
+    if (result != null) {
+      if (options.indent) {
+        var lines = result.split('\n');
+        for (var i = 0, l = lines.length; i < l; i++) {
+          if (!lines[i] && i + 1 === l) {
+            break;
+          }
+
+          lines[i] = options.indent + lines[i];
+        }
+        result = lines.join('\n');
+      }
+      return result;
+    } else {
+      throw new _Exception2['default']('The partial ' + options.name + ' could not be compiled when running in runtime-only mode');
+    }
+  }
+
+  // Just add water
+  var container = {
+    strict: function strict(obj, name) {
+      if (!(name in obj)) {
+        throw new _Exception2['default']('"' + name + '" not defined in ' + obj);
+      }
+      return obj[name];
+    },
+    lookup: function lookup(depths, name) {
+      var len = depths.length;
+      for (var i = 0; i < len; i++) {
+        if (depths[i] && depths[i][name] != null) {
+          return depths[i][name];
+        }
+      }
+    },
+    lambda: function lambda(current, context) {
+      return typeof current === 'function' ? current.call(context) : current;
+    },
+
+    escapeExpression: Utils.escapeExpression,
+    invokePartial: invokePartialWrapper,
+
+    fn: function fn(i) {
+      return templateSpec[i];
+    },
+
+    programs: [],
+    program: function program(i, data, declaredBlockParams, blockParams, depths) {
+      var programWrapper = this.programs[i],
+          fn = this.fn(i);
+      if (data || depths || blockParams || declaredBlockParams) {
+        programWrapper = wrapProgram(this, i, fn, data, declaredBlockParams, blockParams, depths);
+      } else if (!programWrapper) {
+        programWrapper = this.programs[i] = wrapProgram(this, i, fn);
+      }
+      return programWrapper;
+    },
+
+    data: function data(value, depth) {
+      while (value && depth--) {
+        value = value._parent;
+      }
+      return value;
+    },
+    merge: function merge(param, common) {
+      var obj = param || common;
+
+      if (param && common && param !== common) {
+        obj = Utils.extend({}, common, param);
+      }
+
+      return obj;
+    },
+
+    noop: env.VM.noop,
+    compilerInfo: templateSpec.compiler
+  };
+
+  function ret(context) {
+    var options = arguments[1] === undefined ? {} : arguments[1];
+
+    var data = options.data;
+
+    ret._setup(options);
+    if (!options.partial && templateSpec.useData) {
+      data = initData(context, data);
+    }
+    var depths = undefined,
+        blockParams = templateSpec.useBlockParams ? [] : undefined;
+    if (templateSpec.useDepths) {
+      depths = options.depths ? [context].concat(options.depths) : [context];
+    }
+
+    return templateSpec.main.call(container, context, container.helpers, container.partials, data, blockParams, depths);
+  }
+  ret.isTop = true;
+
+  ret._setup = function (options) {
+    if (!options.partial) {
+      container.helpers = container.merge(options.helpers, env.helpers);
+
+      if (templateSpec.usePartial) {
+        container.partials = container.merge(options.partials, env.partials);
+      }
+    } else {
+      container.helpers = options.helpers;
+      container.partials = options.partials;
+    }
+  };
+
+  ret._child = function (i, data, blockParams, depths) {
+    if (templateSpec.useBlockParams && !blockParams) {
+      throw new _Exception2['default']('must pass block params');
+    }
+    if (templateSpec.useDepths && !depths) {
+      throw new _Exception2['default']('must pass parent depths');
+    }
+
+    return wrapProgram(container, i, templateSpec[i], data, 0, blockParams, depths);
+  };
+  return ret;
+}
+
+function wrapProgram(container, i, fn, data, declaredBlockParams, blockParams, depths) {
+  function prog(context) {
+    var options = arguments[1] === undefined ? {} : arguments[1];
+
+    return fn.call(container, context, container.helpers, container.partials, options.data || data, blockParams && [options.blockParams].concat(blockParams), depths && [context].concat(depths));
+  }
+  prog.program = i;
+  prog.depth = depths ? depths.length : 0;
+  prog.blockParams = declaredBlockParams || 0;
+  return prog;
+}
+
+function resolvePartial(partial, context, options) {
+  if (!partial) {
+    partial = options.partials[options.name];
+  } else if (!partial.call && !options.name) {
+    // This is a dynamic partial that returned a string
+    options.name = partial;
+    partial = options.partials[partial];
+  }
+  return partial;
+}
+
+function invokePartial(partial, context, options) {
+  options.partial = true;
+
+  if (partial === undefined) {
+    throw new _Exception2['default']('The partial ' + options.name + ' could not be found');
+  } else if (partial instanceof Function) {
+    return partial(context, options);
+  }
+}
+
+function noop() {
+  return '';
+}
+
+function initData(context, data) {
+  if (!data || !('root' in data)) {
+    data = data ? _COMPILER_REVISION$REVISION_CHANGES$createFrame.createFrame(data) : {};
+    data.root = context;
+  }
+  return data;
+}
+},{"./base":2,"./exception":3,"./utils":6}],5:[function(require,module,exports){
+'use strict';
+
+exports.__esModule = true;
+// Build out our basic SafeString type
+function SafeString(string) {
+  this.string = string;
+}
+
+SafeString.prototype.toString = SafeString.prototype.toHTML = function () {
+  return '' + this.string;
+};
+
+exports['default'] = SafeString;
+module.exports = exports['default'];
+},{}],6:[function(require,module,exports){
+'use strict';
+
+exports.__esModule = true;
+exports.extend = extend;
+
+// Older IE versions do not directly support indexOf so we must implement our own, sadly.
+exports.indexOf = indexOf;
+exports.escapeExpression = escapeExpression;
+exports.isEmpty = isEmpty;
+exports.blockParams = blockParams;
+exports.appendContextPath = appendContextPath;
+/*jshint -W004 */
+var escape = {
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  '\'': '&#x27;',
+  '`': '&#x60;'
+};
+
+var badChars = /[&<>"'`]/g,
+    possible = /[&<>"'`]/;
+
+function escapeChar(chr) {
+  return escape[chr];
+}
+
+function extend(obj /* , ...source */) {
+  for (var i = 1; i < arguments.length; i++) {
+    for (var key in arguments[i]) {
+      if (Object.prototype.hasOwnProperty.call(arguments[i], key)) {
+        obj[key] = arguments[i][key];
+      }
+    }
+  }
+
+  return obj;
+}
+
+var toString = Object.prototype.toString;
+
+exports.toString = toString;
+// Sourced from lodash
+// https://github.com/bestiejs/lodash/blob/master/LICENSE.txt
+/*eslint-disable func-style, no-var */
+var isFunction = function isFunction(value) {
+  return typeof value === 'function';
+};
+// fallback for older versions of Chrome and Safari
+/* istanbul ignore next */
+if (isFunction(/x/)) {
+  exports.isFunction = isFunction = function (value) {
+    return typeof value === 'function' && toString.call(value) === '[object Function]';
+  };
+}
+var isFunction;
+exports.isFunction = isFunction;
+/*eslint-enable func-style, no-var */
+
+/* istanbul ignore next */
+var isArray = Array.isArray || function (value) {
+  return value && typeof value === 'object' ? toString.call(value) === '[object Array]' : false;
+};exports.isArray = isArray;
+
+function indexOf(array, value) {
+  for (var i = 0, len = array.length; i < len; i++) {
+    if (array[i] === value) {
+      return i;
+    }
+  }
+  return -1;
+}
+
+function escapeExpression(string) {
+  if (typeof string !== 'string') {
+    // don't escape SafeStrings, since they're already safe
+    if (string && string.toHTML) {
+      return string.toHTML();
+    } else if (string == null) {
+      return '';
+    } else if (!string) {
+      return string + '';
+    }
+
+    // Force a string conversion as this will be done by the append regardless and
+    // the regex test will do this transparently behind the scenes, causing issues if
+    // an object's to string has escaped characters in it.
+    string = '' + string;
+  }
+
+  if (!possible.test(string)) {
+    return string;
+  }
+  return string.replace(badChars, escapeChar);
+}
+
+function isEmpty(value) {
+  if (!value && value !== 0) {
+    return true;
+  } else if (isArray(value) && value.length === 0) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function blockParams(params, ids) {
+  params.path = ids;
+  return params;
+}
+
+function appendContextPath(contextPath, id) {
+  return (contextPath ? contextPath + '.' : '') + id;
+}
+},{}],7:[function(require,module,exports){
+// Create a simple path alias to allow browserify to resolve
+// the runtime on a supported path.
+module.exports = require('./dist/cjs/handlebars.runtime')['default'];
+
+},{"./dist/cjs/handlebars.runtime":1}],8:[function(require,module,exports){
+module.exports = require("handlebars/runtime")["default"];
+
+},{"handlebars/runtime":7}],9:[function(require,module,exports){
+var App, Layout,
+  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+  hasProp = {}.hasOwnProperty;
+
+Layout = (function(superClass) {
+  extend(Layout, superClass);
+
+  function Layout() {
+    return Layout.__super__.constructor.apply(this, arguments);
+  }
+
+  Layout.prototype.template = require('./layout.hbs');
+
+  Layout.prototype.tagName = 'main';
+
+  Layout.prototype.el = 'body';
+
+  Layout.prototype.initialize = function() {
+    return this.render();
+  };
+
+  Layout.prototype.regions = {
+    main: 'main',
+    dialogs: 'dialogs'
+  };
+
+  return Layout;
+
+})(Marionette.LayoutView);
+
+App = new Marionette.Application({
+  initialize: function() {
+    return this.debug = new Debugger(this, 'Main App').debug;
+  },
+  onStart: function() {
+    this.debug('starting');
+    Backbone.Intercept.start();
+    Backbone.history.start({
+      pushState: true
+    });
+    this.layout = new Layout;
+    return App.channel.commands.execute('module:demo:start', {
+      region: this.layout.getRegion('dialogs')
+    });
+  }
+});
+
+window.App = App;
+
+require('./modules/index.coffee');
+
+App.start();
+
+
+
+},{"./layout.hbs":10,"./modules/index.coffee":14}],10:[function(require,module,exports){
+// hbsfy compiled Handlebars template
+var HandlebarsCompiler = require('hbsfy/runtime');
+module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+    return "<main></main>\n<dialogs></dialogs>";
+},"useData":true});
+
+},{"hbsfy/runtime":8}],11:[function(require,module,exports){
+var Demo, TestModal,
+  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+  hasProp = {}.hasOwnProperty;
+
+TestModal = require('./views/modal.coffee');
+
+Demo = (function(superClass) {
+  extend(Demo, superClass);
+
+  function Demo() {
+    return Demo.__super__.constructor.apply(this, arguments);
+  }
+
+  Demo.prototype.startWithParent = false;
+
+  Demo.prototype.initialize = function(moduleName, app) {
+    var commands;
+    commands = App.channel.commands;
+    commands.setHandler('module:' + moduleName + ':start', (function(_this) {
+      return function(options) {
+        return _this.start(options);
+      };
+    })(this));
+    return commands.setHandler('module:' + moduleName + ':stop', (function(_this) {
+      return function(options) {
+        return _this.stop(options);
+      };
+    })(this));
+  };
+
+  Demo.prototype.onStart = function(options) {
+    this.region = options.region;
+    this.view = new TestModal;
+    return this.region.show(this.view);
+  };
+
+  Demo.prototype.onStop = function() {
+    this.view.destroy();
+    return App.channel.commands.execute('module:demo:start', {
+      region: this.region
+    });
+  };
+
+  return Demo;
+
+})(Marionette.Module);
+
+App.module('demo', Demo);
+
+
+
+},{"./views/modal.coffee":12}],12:[function(require,module,exports){
+var Modal,
+  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+  hasProp = {}.hasOwnProperty;
+
+Modal = (function(superClass) {
+  extend(Modal, superClass);
+
+  function Modal() {
+    return Modal.__super__.constructor.apply(this, arguments);
+  }
+
+  Modal.prototype.template = require('./modal.hbs');
+
+  Modal.prototype.keyControl = false;
+
+  Modal.prototype.events = {
+    'click .destroy': function() {
+      return App.module('demo').stop();
+    }
+  };
+
+  return Modal;
+
+})(Backbone.Modal);
+
+module.exports = Modal;
+
+
+
+},{"./modal.hbs":13}],13:[function(require,module,exports){
+// hbsfy compiled Handlebars template
+var HandlebarsCompiler = require('hbsfy/runtime');
+module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+    return "<div class=\"bbm-modal__topbar\">\n  <h3 class=\"bbm-modal__title\">\n    Congratulations\n    <i class=\"fa fa-times pull-right destroy red pointer\"></i>\n  </h3>\n</div>\n<div class=\"bbm-modal__section\">\n  <center>\n    <i class=\"fa fa-thumbs-o-up fa-3x\"></i>\n    <p class=\"m-t-20\">You've successfully installed and booted up the<br />Front-End Boilerplate.</p>\n  </center>\n  <p class=\"m-t-20\"><small>You are looking at a demonstration module, you can keep it from starting on line 20 of <u>src/app/index.coffee</u></small></p>\n</div>\n<div class=\"bbm-modal__bottombar\">\n  <button class=\"btn btn-danger destroy pull-left\"><i class=\"fa fa-fw fa-times\"></i> close</button>\n  <button class=\"btn btn-success destroy\"><i class=\"fa fa-fw fa-check\"></i> confirm</button>\n</div>";
+},"useData":true});
+
+},{"hbsfy/runtime":8}],14:[function(require,module,exports){
+require('./demo/index.coffee');
+
+
+
+},{"./demo/index.coffee":11}]},{},[9]);
