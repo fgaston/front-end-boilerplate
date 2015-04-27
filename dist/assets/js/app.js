@@ -753,22 +753,48 @@ module.exports = require('./dist/cjs/handlebars.runtime')['default'];
 module.exports = require("handlebars/runtime")["default"];
 
 },{"handlebars/runtime":7}],9:[function(require,module,exports){
-var App;
+var App, Layout,
+  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+  hasProp = {}.hasOwnProperty;
+
+Layout = (function(superClass) {
+  extend(Layout, superClass);
+
+  function Layout() {
+    return Layout.__super__.constructor.apply(this, arguments);
+  }
+
+  Layout.prototype.template = require('./layout.hbs');
+
+  Layout.prototype.tagName = 'main';
+
+  Layout.prototype.el = 'body';
+
+  Layout.prototype.initialize = function() {
+    return this.render();
+  };
+
+  Layout.prototype.regions = {
+    main: 'main',
+    dialogs: 'dialogs'
+  };
+
+  return Layout;
+
+})(Marionette.LayoutView);
 
 App = new Marionette.Application({
   initialize: function() {
     return this.debug = new Debugger(this, 'Main App').debug;
   },
   onStart: function() {
+    this.debug('starting');
     Backbone.Intercept.start();
-    this.debug('started');
     Backbone.history.start({
       pushState: true
     });
+    this.layout = new Layout;
     return App.module('demo').start();
-  },
-  regions: {
-    'main': 'main'
   }
 });
 
@@ -780,7 +806,14 @@ App.start();
 
 
 
-},{"./modules/index.coffee":13}],10:[function(require,module,exports){
+},{"./layout.hbs":10,"./modules/index.coffee":14}],10:[function(require,module,exports){
+// hbsfy compiled Handlebars template
+var HandlebarsCompiler = require('hbsfy/runtime');
+module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+    return "<main></main>\n<dialogs></dialogs>";
+},"useData":true});
+
+},{"hbsfy/runtime":8}],11:[function(require,module,exports){
 var Demo, TestModal,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
@@ -798,7 +831,7 @@ Demo = (function(superClass) {
 
   Demo.prototype.onStart = function() {
     this.view = new TestModal;
-    return App.getRegion('main').show(this.view);
+    return App.layout.getRegion('dialogs').show(this.view);
   };
 
   Demo.prototype.onStop = function() {
@@ -814,7 +847,7 @@ App.module('demo', Demo);
 
 
 
-},{"./views/modal.coffee":11}],11:[function(require,module,exports){
+},{"./views/modal.coffee":12}],12:[function(require,module,exports){
 var Modal,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
@@ -844,16 +877,16 @@ module.exports = Modal;
 
 
 
-},{"./modal.hbs":12}],12:[function(require,module,exports){
+},{"./modal.hbs":13}],13:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
     return "<div class=\"bbm-modal__topbar\">\n  <h3 class=\"bbm-modal__title\">\n    Congratulations\n    <i class=\"fa fa-times pull-right destroy red pointer\"></i>\n  </h3>\n</div>\n<div class=\"bbm-modal__section\">\n  <center>\n    <i class=\"fa fa-thumbs-o-up fa-3x\"></i>\n    <p class=\"m-t-20\">You've successfully installed and booted up the<br />Front-End Boilerplate.</p>\n  </center>\n  <p class=\"m-t-20\"><small>You are looking at a demonstration module, you can keep it from starting it in line 9 of <u>src/app/index.coffee</u></small></p>\n</div>\n<div class=\"bbm-modal__bottombar\">\n  <button class=\"btn btn-danger destroy pull-left\"><i class=\"fa fa-fw fa-times\"></i> close</button>\n  <button class=\"btn btn-success destroy\"><i class=\"fa fa-fw fa-check\"></i> confirm</button>\n</div>";
 },"useData":true});
 
-},{"hbsfy/runtime":8}],13:[function(require,module,exports){
+},{"hbsfy/runtime":8}],14:[function(require,module,exports){
 require('./demo/index.coffee');
 
 
 
-},{"./demo/index.coffee":10}]},{},[9]);
+},{"./demo/index.coffee":11}]},{},[9]);

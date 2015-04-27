@@ -4,7 +4,7 @@ class Demo extends Marionette.Module
   startWithParent: false
   onStart: ->
     @view = new TestModal
-    App.getRegion('main').show @view
+    App.layout.getRegion('dialogs').show @view
   onStop: ->
     @view.destroy()
     @start()
