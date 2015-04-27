@@ -2,7 +2,8 @@ test/*.log
 node_modules
 node_modules/
 node_modules/*
-dist/js/app.js
+dist/assets/js/app.js
+dist/assets/js/plugins.js
 report/
 report/*
 npm-debug.log
