@@ -12,7 +12,7 @@ Technologies used:
 Third party tools and libraries used:
 -
 - jQuery
-- Bootstrap Theme: "Paper" by Bootswatch
+- Bootstrap
 - Grunt (watch, concat and uglify)
 - Browserify (caching-coffeeify, hbsfy and uglifify)
 - Underscore
@@ -33,14 +33,7 @@ grunt build
 Development
 -
 ```
-npm start
 grunt
-open http://localhost:8315 --fresh
-```
-
-UAT
--
-```
 npm start
 open http://localhost:8315 --fresh
 ```
