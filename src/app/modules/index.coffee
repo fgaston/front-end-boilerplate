@@ -1,1 +1,1 @@
-require './main/index.coffee'
+require './demo/index.coffee'

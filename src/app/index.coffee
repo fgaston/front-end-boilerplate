@@ -6,6 +6,7 @@ App = new Marionette.Application
     @debug 'started'
     Backbone.history.start
       pushState: true
+    App.module('demo').start()
   regions:
     'main': 'main'
 
