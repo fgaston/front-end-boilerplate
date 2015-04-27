@@ -1,10 +1,5 @@
 test/*.log
 node_modules
-node_modules/
-node_modules/*
-dist/assets/js/app.js
-dist/assets/js/plugins.js
-report/
-report/*
+dist/assets/js/*.js
 npm-debug.log
 .DS_STORE
