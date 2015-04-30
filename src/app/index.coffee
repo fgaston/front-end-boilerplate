@@ -1,3 +1,5 @@
+require 'handlebars/index.coffee'
+
 class Layout extends Marionette.LayoutView
   template: require './layout.hbs'
   tagName: 'main'

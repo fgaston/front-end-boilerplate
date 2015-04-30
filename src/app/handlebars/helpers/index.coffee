@@ -17,5 +17,4 @@ Handlebars.registerHelper 'grid', (str) ->
       'col-md-'+splittr[2]
       'col-lg-'+splittr[3]
     ]
-  return returnValue.join ' '
-
+  returnValue.join ' '
