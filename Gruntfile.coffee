@@ -1,7 +1,7 @@
 module.exports = (grunt) ->
 
   grunt.registerTask 'default', 'watch'
-  grunt.registerTask 'build', ['browserify:clean', 'uglify', 'cssmin']
+  grunt.registerTask 'build', ['browserify:clean', 'uglify', 'cssmin', 'zip']
 
   grunt.initConfig
     pkg: grunt.file.readJSON 'package.json'
@@ -37,7 +37,7 @@ module.exports = (grunt) ->
         options:
           transform: ['caching-coffeeify', 'hbsfy']
           browserifyOptions:
-            paths: ['./src/app']
+            paths: ['./src', './src/app']
       clean:
         files:
           'dist/assets/js/app.js': 'src/app/index.coffee'
@@ -55,8 +55,15 @@ module.exports = (grunt) ->
       target:
         files:
           'dist/assets/css/bundle.css': 'src/**/*.css'
+    zip:
+      target:
+        cwd: './'
+        src: ['index.js', 'package.json', 'dist/**/*.*']
+        dest: 'build.zip'
+        dot: true
 
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-contrib-cssmin'
   grunt.loadNpmTasks 'grunt-contrib-uglify'
+  grunt.loadNpmTasks 'grunt-zip'
   grunt.loadNpmTasks 'grunt-browserify'

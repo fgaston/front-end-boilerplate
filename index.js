@@ -4,7 +4,7 @@ var fs = require('fs');
 
 var options = {
   gzip: process.env.gzip || true,
-  port: process.env.port || 8315,
+  port: process.env.port || 3000,
   config: {
     root: './dist',
     routes: {
