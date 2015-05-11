@@ -6,7 +6,7 @@ Front-end Boilerplate
 
 Demo:
 -
-http://front-end-boilerplate.elasticbeanstalk.com:3007
+http://front-end-boilerplate.elasticbeanstalk.com
 
 Technologies used:
 -
