@@ -4,6 +4,10 @@
 Front-end Boilerplate
 =========================
 
+Demo:
+-
+http://front-end-boilerplate.elasticbeanstalk.com:3007
+
 Technologies used:
 -
 - HTML5 + CSS3

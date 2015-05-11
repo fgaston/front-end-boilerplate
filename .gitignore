@@ -3,3 +3,4 @@ node_modules
 dist/assets/js/*.js
 npm-debug.log
 .DS_STORE
+*.zip
