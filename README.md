@@ -7,6 +7,8 @@ Front-end Boilerplate
 Demo:
 -
 http://front-end-boilerplate.elasticbeanstalk.com
+http://front-end-boilerplate.elgubenis.com [CNAME]
+
 
 Technologies used:
 -
