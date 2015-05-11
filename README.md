@@ -48,5 +48,5 @@ Production
 -
 ```sh
 grunt build
-# push to AWS Elastic Beanstalk
+# push "./build.zip" to AWS Elastic Beanstalk
 ```
