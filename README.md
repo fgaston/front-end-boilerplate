@@ -30,7 +30,7 @@ Setup
 
 Pre-Requisites
 -
-```
+```sh
 npm install grunt-cli -g
 npm install
 grunt build
@@ -38,8 +38,15 @@ grunt build
 
 Development
 -
-```
+```sh
 grunt
 npm start
 open http://localhost:8315 --fresh
+```
+
+Production
+-
+```sh
+grunt build
+# push to AWS Elastic Beanstalk
 ```
