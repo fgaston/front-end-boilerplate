@@ -1,29 +1,23 @@
 require 'handlebars/index.coffee'
+window.debug = new Debugger('Main App').debug
+Layout = require './views/layout.coffee'
 
-class Layout extends Marionette.LayoutView
-  template: require './layout.hbs'
-  tagName: 'main'
-  el: 'body'
+window.App = new Marionette.Application
   initialize: ->
-    @render()
-  regions:
-    main: 'main'
-    dialogs: 'dialogs'
-
-App = new Marionette.Application
-  initialize: ->
-    @debug = new Debugger(@, 'Main App').debug
+    @layout = new Layout
   onStart: ->
-    @debug 'starting'
+    debug 'starting'
+    @layout.render()
+
     Backbone.Intercept.start()
     Backbone.history.start
       pushState: true
-    @layout = new Layout
+    
+    # send message to start demo module
     App.channel.commands.execute 'module:demo:start',
-      region: @layout.getRegion('dialogs')
+      region: @layout.getRegion('dialogs') # pass modules region
 
-window.App = App
-
+# include modules
 require './modules/index.coffee'
 
 App.start()

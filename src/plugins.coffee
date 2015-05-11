@@ -1,22 +1,24 @@
 # import dependencies
 dependencies          = {}
 dependencies.Debugger = require 'lib/debugger.coffee'
+
+# include vendors
 $                     = require 'jquery'
 _                     = require 'underscore'
 Backbone              = require 'backbone'
 Backbone.$            = $
 Marionette            = require 'backbone.marionette'
 
-# create export
+# build temporary dependencies object
 dependencies.$          = $
 dependencies.jQuery     = dependencies.$
 dependencies._          = _
 dependencies.Backbone   = Backbone
 dependencies.Marionette = Marionette
 
-# export dependencies
+# export dependencies to global scope
 _.extend window, dependencies
-dependencies = null
+dependencies = null # free up temporary object
 
 # require plugins
 require 'bootstrap'

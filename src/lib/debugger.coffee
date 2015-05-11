@@ -1,11 +1,10 @@
 class Debugger
-  constructor: (app, appName) ->
-    @app = app
-    @appName = appName
+  constructor: (label) ->
+    @label = label
   debug: (type, str) =>
     if !str
       str = type
       type = 'log'
-    return console[type] '[' + @appName.toUpperCase() + '] ' + str
+    return console[type] '[' + @label.toUpperCase() + '] ' + str
 
 module.exports = Debugger

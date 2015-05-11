@@ -1,3 +1,9 @@
+# --------------------------------------------------------
+# please only define global handlebars helpers in here.
+# stuff that works for every module, not module specific.
+# --------------------------------------------------------
+
+# include handlebars runtime
 Handlebars = require 'hbsfy/runtime'
 
 # shuffle in swag
