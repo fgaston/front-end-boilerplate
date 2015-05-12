@@ -30,6 +30,7 @@ module.exports = (grunt) ->
         options:
           transform: ['caching-coffeeify']
           browserifyOptions:
+            extensions: '.coffee'
             paths: ['./src', './src/app']
       dev:
         files:
@@ -37,6 +38,7 @@ module.exports = (grunt) ->
         options:
           transform: ['caching-coffeeify', 'hbsfy']
           browserifyOptions:
+            extensions: '.coffee'
             paths: ['./src', './src/app']
       clean:
         files:
@@ -45,6 +47,7 @@ module.exports = (grunt) ->
         options:
           transform: ['caching-coffeeify', 'hbsfy', 'uglifyify']
           browserifyOptions:
+            extensions: '.coffee'
             paths: ['./src', './src/app']
     uglify:
       dist:

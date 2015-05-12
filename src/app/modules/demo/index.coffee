@@ -1,4 +1,4 @@
-TestModal = require './views/modal.coffee'
+TestModal = require './views/modal'
 
 class Demo extends Marionette.Module
   startWithParent: false

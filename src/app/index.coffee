@@ -1,6 +1,6 @@
-require 'handlebars/index.coffee'
+require 'handlebars/index'
 window.debug = new Debugger('Main App').debug
-Layout = require './views/layout.coffee'
+Layout = require './views/layout'
 
 window.App = new Marionette.Application
   initialize: ->
@@ -18,6 +18,6 @@ window.App = new Marionette.Application
       region: @layout.getRegion('dialogs') # pass modules region
 
 # include modules
-require './modules/index.coffee'
+require './modules'
 
 App.start()

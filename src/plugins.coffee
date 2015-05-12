@@ -1,6 +1,6 @@
 # import dependencies
 dependencies          = {}
-dependencies.Debugger = require 'lib/debugger.coffee'
+dependencies.Debugger = require 'lib/debugger'
 
 # include vendors
 $                     = require 'jquery'
@@ -25,5 +25,5 @@ require 'bootstrap'
 require 'backbone.intercept'
 require 'backbone.modal'
 require 'jquery.cookie'
-require 'lib/ensure-modules.coffee'
+require 'lib/ensure-modules'
 require 'lib/backbone.credentials.js'

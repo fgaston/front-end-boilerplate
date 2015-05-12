@@ -1,2 +1,2 @@
-require './helpers/index.coffee'
-require './partials/index.coffee'
+require './helpers'
+require './partials'
