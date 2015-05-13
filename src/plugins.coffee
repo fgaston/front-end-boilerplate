@@ -6,7 +6,6 @@ dependencies.Debugger = require 'lib/debugger'
 $                     = require 'jquery'
 _                     = require 'underscore'
 Backbone              = require 'backbone'
-Backbone.$            = $
 Marionette            = require 'backbone.marionette'
 
 # build temporary dependencies object
