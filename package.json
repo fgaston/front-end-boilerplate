@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/elgubenis/front-end-boilerplate",
   "devDependencies": {
-    "backbone": "^1.1.2",
+    "backbone": "^1.2.0",
     "backbone.intercept": "^0.3.2",
     "backbone.marionette": "^2.4.1",
     "backbone.modal": "^1.1.2",
