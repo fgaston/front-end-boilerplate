@@ -1,10 +1,7 @@
 class Debugger
   constructor: (label) ->
     @label = label
-  debug: (type, str) =>
-    if !str
-      str = type
-      type = 'log'
-    return console[type] '[' + @label.toUpperCase() + '] ' + str
+  debug: (str...) =>
+    return console.log '%c[' + @label + '] ' + str.join(''), 'background: #FFF; color: #999'
 
 module.exports = Debugger
