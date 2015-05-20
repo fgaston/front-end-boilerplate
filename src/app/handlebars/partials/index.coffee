@@ -1,3 +1,3 @@
 Handlebars = require 'hbsfy/runtime'
 
-#Handlebars.registerPartial 'test', require 'templates/partial_test.hbs'
+Handlebars.registerPartial 'modal-footer-default', require './modal-footer-default.hbs'
