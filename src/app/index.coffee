@@ -4,7 +4,7 @@ Layout = require './views/layout'
 
 window.App = new Marionette.Application
   initialize: ->
-    @layout = new Layout
+    @layout = new Layout @
   onStart: ->
     debug 'starting'
     @layout.render()
@@ -14,8 +14,7 @@ window.App = new Marionette.Application
       pushState: true
     
     # send message to start demo module
-    App.channel.commands.execute 'module:demo:start',
-      region: @layout.getRegion('dialogs') # pass modules region
+    App.channel.commands.execute 'module:demo:start'
 
 # include modules
 require './modules'

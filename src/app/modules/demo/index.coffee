@@ -1,3 +1,5 @@
+require './handlebars'
+
 TestModal = require './views/modal'
 
 class Demo extends Marionette.Module
@@ -12,12 +14,8 @@ class Demo extends Marionette.Module
       @stop options
 
   onStart: (options) ->
-    @region = options.region
-    @view = new TestModal
-    @region.show @view
+    App.vent.trigger 'app:layout:dialogs:show', new TestModal
   onStop: ->
-    @view.destroy()
-    App.channel.commands.execute 'module:demo:start',
-      region: @region
+    App.channel.commands.execute 'module:demo:start'
 
 App.module 'demo', Demo
