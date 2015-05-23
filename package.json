@@ -1,6 +1,6 @@
 {
   "name": "front-end-boilerplate",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Front-end Boilerplate",
   "main": "index.js",
   "scripts": {
@@ -23,7 +23,6 @@
     "backbone.marionette": "^2.4.1",
     "backbone.modal": "^1.1.5",
     "bootstrap": "^3.3.4",
-    "caching-coffeeify": "^0.5.1",
     "grunt": "^0.4.5",
     "grunt-browserify": "^3.8.0",
     "grunt-contrib-cssmin": "^0.12.2",
@@ -31,6 +30,7 @@
     "grunt-contrib-watch": "^0.6.1",
     "grunt-zip": "^0.16.2",
     "hbsfy": "^2.2.1",
+    "icsify": "^0.7.0",
     "jquery": "^2.1.3",
     "jquery.cookie": "^1.4.1",
     "uglifyify": "^3.0.1",

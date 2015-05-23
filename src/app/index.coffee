@@ -1,22 +1,21 @@
+# load global Handlebars Helpers and Partials
 require 'handlebars/index'
-window.debug = new Debugger('Main App').debug
-Layout = require './views/layout'
 
+# Define App's Layout, Router + Controller
+Layout      = require './views/layout'
+Router      = require './router'
+Controller  = require './controller'
+
+# Define the App
 window.App = new Marionette.Application
   initialize: ->
-    @layout = new Layout @
+    @router = new Router
+      controller: new Controller
   onStart: ->
-    debug 'starting'
-    @layout.render()
-
+    new Layout @
     Backbone.Intercept.start()
     Backbone.history.start
       pushState: true
-    
-    # send message to start demo module
-    App.channel.commands.execute 'module:demo:start'
 
-# include modules
-require './modules'
-
+# Start App
 App.start()

@@ -1,14 +1,14 @@
 class Layout extends Marionette.LayoutView
   template: require './layout.hbs'
-  tagName: 'main'
   el: 'body'
   initialize: (App) ->
-    @listenTo App.vent, 'app:layout:main:show', (view) =>
-      @getRegion('main').show view
-    @listenTo App.vent, 'app:layout:dialogs:show', (view) =>
-      @getRegion('dialogs').show view
+    @render()
+    @listenTo App.vent, 'layout:content:show', @getRegion('content').show
+    @listenTo App.vent, 'layout:dialogs:show', @getRegion('dialogs').show
   regions:
-    main: 'main'
-    dialogs: 'dialogs'
+    content: '#content'
+    dialogs:
+      selector: '#dialogs',
+      regionClass: Backbone.Marionette.Modals
 
 module.exports = Layout
