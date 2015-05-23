@@ -1,6 +1,7 @@
+# require Debugger
 window.Debugger = require 'lib/debugger'
 
-# build temporary dependencies object
+# require Vendors
 window.$          = require 'jquery'
 window.jQuery     = window.$
 window._          = require 'underscore'
@@ -8,7 +9,7 @@ window.Backbone   = require 'backbone'
 window.Backbone.$ = window.$
 window.Marionette = require 'backbone.marionette'
 
-# require plugins
+# require Plugins
 require 'bootstrap'
 require 'backbone.intercept'
 require 'backbone.modal'
