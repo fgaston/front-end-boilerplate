@@ -18,17 +18,17 @@ module.exports = (grunt) ->
         tasks: 'browserify:dev'
         options: 
           livereload: true
-      plugins:
-        files: ['src/plugins.coffee', 'src/lib/**/*.coffee', 'src/lib/**/*.js']
-        tasks: 'browserify:plugins'
+      infrastructure:
+        files: ['src/infrastructure.coffee']
+        tasks: 'browserify:infrastructure'
         options:
           livereload: true
     browserify:
-      plugins:
+      infrastructure:
         files:
-          'dist/assets/js/plugins.js': 'src/plugins.coffee'
+          'dist/assets/js/infrastructure.js': 'src/infrastructure.coffee'
         options:
-          transform: ['caching-coffeeify']
+          transform: ['icsify']
           browserifyOptions:
             extensions: '.coffee'
             paths: ['./src', './src/app']
@@ -36,16 +36,16 @@ module.exports = (grunt) ->
         files:
           'dist/assets/js/app.js': 'src/app/index.coffee'
         options:
-          transform: ['caching-coffeeify', 'hbsfy']
+          transform: ['icsify', 'hbsfy']
           browserifyOptions:
             extensions: '.coffee'
             paths: ['./src', './src/app']
       clean:
         files:
           'dist/assets/js/app.js': 'src/app/index.coffee'
-          'dist/assets/js/plugins.js': 'src/plugins.coffee'
+          'dist/assets/js/infrastructure.js': 'src/infrastructure.coffee'
         options:
-          transform: ['caching-coffeeify', 'hbsfy', 'uglifyify']
+          transform: ['icsify', 'hbsfy', 'uglifyify']
           browserifyOptions:
             extensions: '.coffee'
             paths: ['./src', './src/app']
@@ -53,7 +53,7 @@ module.exports = (grunt) ->
       dist:
         files:
           'dist/assets/js/app.js': 'dist/assets/js/app.js'
-          'dist/assets/js/plugins.js': 'dist/assets/js/plugins.js'
+          'dist/assets/js/infrastructure.js': 'dist/assets/js/infrastructure.js'
     cssmin:
       target:
         files:

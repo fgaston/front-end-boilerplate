@@ -4,23 +4,18 @@
 Front-end Boilerplate
 =========================
 
-Demo:
--
-- http://front-end-boilerplate.elasticbeanstalk.com
-- http://front-end-boilerplate.elgubenis.com [CNAME]
-
-
 Technologies used:
 -
 - HTML5 + CSS3
-- JavaScript/CoffeeScript
+- JavaScript/CoffeeScript(Iced)
 
 Third party tools and libraries used:
 -
-- jQuery
+- jQuery as '$'
+- Sprint as 'S'
 - Bootstrap
 - Grunt (watch, concat and uglify)
-- Browserify (caching-coffeeify, hbsfy and uglifify)
+- Browserify (transforms: icsify, hbsfy)
 - Underscore
 - Backbone
 - Marionette
@@ -41,7 +36,7 @@ Development
 ```sh
 grunt
 npm start
-open http://localhost:8315 --fresh
+open http://localhost:3000 --fresh
 ```
 
 Production
